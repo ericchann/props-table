@@ -1,0 +1,3 @@
+html, body, #root { height: 100%; }
+body { margin: 0; background: #f3f4f6; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+button { font: inherit; }
