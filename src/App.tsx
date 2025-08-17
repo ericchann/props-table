@@ -81,28 +81,41 @@ export default function App() {
   }
 
   return (
-    <div style={{ padding: 12 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-        <h2 style={{ margin: 0 }}>Props table</h2>
-        <label htmlFor="stat" style={{ fontWeight: 600 }}>Stat</label>
-        <select
-          id="stat"
-          value={stat}
-          onChange={(e) => setStat(e.target.value as 'points' | 'rebounds' | 'assists')}
-          style={{
-            padding: '6px 8px',
-            border: '1px solid #e1e1e1',
-            borderRadius: 8,
-            background: '#fff',
-            fontSize: 14
-          }}
-        >
-          <option value="points">Points</option>
-          <option value="rebounds">Rebounds</option>
-          <option value="assists">Assists</option>
-        </select>
-      </div>
-      <Table rows={filteredRows} />
+  <div style={{ padding: 20, textAlign: 'center' }}>
+    <h1 style={{ fontSize: '100px', fontWeight: 700, marginBottom: '80px' }}>
+      WNBA Betting Table
+    </h1>
+
+    {/* Center this whole form group, but left-align its contents */}
+    <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
+      <label htmlFor="stat" style={{ fontWeight: 500, display: 'block', marginBottom: 8 }}>
+        Props
+      </label>
+      <select
+        id="stat"
+        value={stat}
+        onChange={(e) =>
+          setStat(e.target.value as 'points' | 'rebounds' | 'assists')
+        }
+        style={{
+          padding: '10px 14px',
+          border: '1px solid #e1e1e1',
+          borderRadius: 8,
+          background: '#fff',
+          fontSize: 16,
+          minWidth: 160,
+        }}
+      >
+        <option value="points">Points</option>
+        <option value="rebounds">Rebounds</option>
+        <option value="assists">Assists</option>
+      </select>
     </div>
-  )
+
+    <Table rows={filteredRows} />
+  </div>
+)
+
+
+
 }

@@ -4,17 +4,20 @@
   overflow: auto;
   background: #fff;
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  max-width: 100%;
+  /* Center the whole block and control overall width */
+  width: min(1400px, 96vw);   /* a little wider but still responsive */
+  margin: 0 auto;             /* center */
 }
 
 .table {
-  width: 100%;
+  width: 100%;                /* fill the wrapper — no inner white gutters */
   border-collapse: separate;
   border-spacing: 0;
-  min-width: 980px;
+  min-width: 100px;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   font-size: 14px;
   color: #262626;
+  table-layout: auto;
 }
 
 thead th {
@@ -41,12 +44,10 @@ tbody tr:hover td {
 }
 
 .stickyCol {
-  position: sticky;
-  left: 0;
   z-index: 2;
   background: #fff;
   text-align: left;
-  min-width: 260px;
+  min-width: 200px;   /* trimmed from 260; bump if you want more */
   font-weight: 600;
 }
 
@@ -58,7 +59,8 @@ tbody tr:hover td {
 .cell {
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
-  border-radius: 6px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
 }
 
 .num { text-align: center; }
@@ -78,8 +80,6 @@ tbody tr:hover td {
 .pillGray { background: #eee; color: #444; }
 
 .headerStickyLeft {
-  position: sticky;
-  left: 0;
   z-index: 4;
   text-align: left;
 }
@@ -90,10 +90,7 @@ tbody tr:hover td {
 
 /* --- sortable header additions --- */
 
-.header {
-  /* Applied to <th> to let the button fill edge to edge */
-  padding: 0;
-}
+.header { padding: 0; }
 
 .headerButton {
   display: flex;
@@ -109,32 +106,16 @@ tbody tr:hover td {
   transition: background-color 120ms ease-in;
 }
 
-.headerButton:hover {
-  background-color: rgba(0,0,0,0.06); /* darker on hover */
-}
+.headerButton:hover { background-color: rgba(0,0,0,0.06); }
 
-/* Arrow: appears only when column is active, direction via data-dir */
 .sortArrow {
   inline-size: 0.8em;
   text-align: center;
-  opacity: 0;                 /* hidden by default */
+  opacity: 0;
   transition: opacity 120ms ease-in;
 }
 
-/* On hover, show a faint arrow so the affordance is discoverable */
-.headerButton:hover .sortArrow {
-  opacity: 0.35;
-}
-
-.headerButton[data-active="true"] .sortArrow {
-  opacity: 1;                 /* fully visible when active */
-}
-
-/* Use the data attributes to set the arrow character */
-.headerButton[data-active="true"][data-dir="asc"] .sortArrow::after {
-  content: "▲";
-}
-
-.headerButton[data-active="true"][data-dir="desc"] .sortArrow::after {
-  content: "▼";
-}
+.headerButton:hover .sortArrow { opacity: 0.35; }
+.headerButton[data-active="true"] .sortArrow { opacity: 1; }
+.headerButton[data-active="true"][data-dir="asc"] .sortArrow::after { content: "▲"; }
+.headerButton[data-active="true"][data-dir="desc"] .sortArrow::after { content: "▼"; }

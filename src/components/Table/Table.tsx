@@ -14,22 +14,37 @@ type ColKey =
 export default function Table({ rows }: Props) {
   console.debug('[Table] rows count', rows.length, rows.slice(0,3))
 
-  const [sortKey, setSortKey] = React.useState<ColKey>('PLAYER')
-  const [sortDir, setSortDir] = React.useState<SortDir>('asc')
+  const [sortKey, setSortKey] = React.useState<ColKey>('L5')
+  const [sortDir, setSortDir] = React.useState<SortDir>('desc')
 
-  function heatPercent(p?: number | null) {
-    if (p == null) return {}
-    const hue = Math.max(0, Math.min(100, p)) * 1.2 // 0..100 → 0..120
-    return { backgroundColor: `hsl(${hue} 75% 92%)` } as React.CSSProperties
-  }
+// 0–100% with white-ish middle (50%) and stronger color at extremes
+// Softer pastel scale: white-ish around the middle, gentle mint/rose at extremes
+function heatPercent(p?: number | null): React.CSSProperties {
+  if (p == null) return {}
+  const pct = Math.max(0, Math.min(100, p))
+  // 0 -> red, 100 -> green
+  const hue = pct * 1.2 // 0..120
+  const dist = Math.abs(pct - 50) / 50 // 0..1 away from 50
+  // Pastel: moderate saturation, high lightness that only drops a little at extremes
+  const sat = 58                          // fixed for softer color
+  const light = 92 - dist * 12            // 92% near white -> ~80% at extremes
+  return { backgroundColor: `hsl(${hue} ${sat}% ${light}%)` }
+}
 
-  function heatDiff(d?: number | null) {
-    if (d == null) return {}
-    const clamped = Math.max(-5, Math.min(5, d))
-    const pct = (clamped + 5) / 10 // 0..1
-    const hue = pct * 120
-    return { backgroundColor: `hsl(${hue} 75% 92%)` } as React.CSSProperties
-  }
+function heatDiff(d?: number | null): React.CSSProperties {
+  if (d == null) return {}
+  const clamped = Math.max(-5, Math.min(5, d))
+  // -5 -> red (0), +5 -> green (120)
+  const pct = (clamped + 5) / 10
+  const hue = pct * 120
+  const dist = Math.abs(clamped) / 5      // 0..1 away from 0
+  const sat = 58
+  const light = 92 - dist * 12
+  return { backgroundColor: `hsl(${hue} ${sat}% ${light}%)` }
+}
+
+
+
 
   function dvpPill(rank?: number | null) {
     if (rank == null) return '—'
