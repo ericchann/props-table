@@ -2,27 +2,6 @@ import { z } from 'zod'
 import { api } from './client'
 import type { LinesRow } from '../types/models'
 
-const STAT = z.enum([
-  'points', 'rebounds', 'assists',
-  'fg3PtMade', 'pointsReboundsAssists',
-  'pointsRebounds', 'pointsAssists',
-  'reboundsAssists', 'fantasyPts'
-])
-
-const LP = z.object({
-  summary: z.object({
-    manualOU: z.number().nullable(),
-    overPrice: z.union([z.number(), z.string()]).nullable(),
-    underPrice: z.union([z.number(), z.string()]).nullable(),
-  }),
-  altLines: z.record(z.string(), z.any()),
-  books: z.array(z.object({
-    book: z.string(),
-    value: z.number().nullable().optional(),
-    overPrice: z.union([z.number(), z.string()]).nullable().optional(),
-    underPrice: z.union([z.number(), z.string()]).nullable().optional(),
-  }))
-})
 const L = z.object({
   // id may be null in some upstream responses — accept nullable then filter/normalize later
   id: z.string().nullable().optional(),
@@ -53,13 +32,37 @@ export async function getLines(): Promise<LinesRow[]> {
       } as unknown as LinesRow
     })
 
-    // DEBUG: inspect the fetched payload + how many normalized items
-    console.debug('[getLines] raw length:', Array.isArray(data) ? data.length : 0)
-    console.debug('[getLines] normalized length:', normalized.length, 'first:', normalized[0])
+    // expand per-player projection into one row per stat (points, assists, rebounds)
+    const statsToShow = ['points', 'assists', 'rebounds']
+    const rows = normalized.flatMap((p) => {
+      // normalized players may have different name keys; ensure `name` exists for downstream joins
+      const playerName = (p as any).name ?? (p as any).player ?? (p as any).fullName ?? ''
+      const baseId = String((p as any).id ?? '')
+      return statsToShow.map((stat) => {
+        const projVal = (p as any).projection?.[stat]
+        return {
+          // keep base id but also include stat so other code can construct variant ids
+          id: `${baseId}-${stat}`,
+          baseId,
+          name: playerName,
+          player: playerName,
+          team: p.team,
+          stat,
+          proj: typeof projVal === 'number' ? projVal : projVal == null ? null : Number(projVal),
+          // keep other fields the Table/join expects (fill with null/defaults)
+          // p was coerced to LinesRow earlier; use 'any' here because LinesRow doesn't declare `summary`
+          summary: (p as any).summary ?? null,
+          projection: p.projection ?? {},
+        } as unknown as LinesRow
+      })
+    })
 
-    return normalized
+    console.debug('[getLines] raw length:', Array.isArray(data) ? data.length : 0)
+    console.debug('[getLines] normalized players:', normalized.length, 'expanded rows:', rows.length)
+    return rows as unknown as LinesRow[]
   } catch (err) {
     console.warn('getLines: parse failed, returning empty array', err)
     return []
   }
 }
+ 

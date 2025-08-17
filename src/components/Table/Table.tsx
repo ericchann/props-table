@@ -1,11 +1,21 @@
 import styles from './Table.module.css'
 import type { TableRow } from '../../types/models'
 import { InjuryBadge, AltBadge } from '../Badges'
+import React from 'react'
 
 type Props = { rows: TableRow[] }
 
+type SortDir = 'asc' | 'desc'
+type ColKey =
+  | 'PLAYER' | 'L' | 'O' | 'U' | 'STK'
+  | '24/25' | 'H2H' | 'L5' | 'L10' | 'L20' | '23/24'
+  | 'PROJ' | 'DIFF' | 'DVP'
+
 export default function Table({ rows }: Props) {
   console.debug('[Table] rows count', rows.length, rows.slice(0,3))
+
+  const [sortKey, setSortKey] = React.useState<ColKey>('PLAYER')
+  const [sortDir, setSortDir] = React.useState<SortDir>('asc')
 
   function heatPercent(p?: number | null) {
     if (p == null) return {}
@@ -29,29 +39,119 @@ export default function Table({ rows }: Props) {
     return <span style={{ background: bg, color, borderRadius: 999, padding: '2px 8px', fontWeight: 600, fontSize: 12 }}>{label}</span>
   }
 
+  // Map each header to a value selector for sorting
+  const selectors: Record<ColKey, (r: TableRow) => string | number | null | undefined> = {
+    PLAYER: (r) => r.player ?? '',
+    L:      (r) => r.line,
+    O:      (r) => r.over,
+    U:      (r) => r.under,
+    STK:    (r) => r.stk,
+    '24/25':(r) => r.pctSeason,
+    H2H:    (r) => r.pctH2H,
+    L5:     (r) => r.pctL5,
+    L10:    (r) => r.pctL10,
+    L20:    (r) => r.pctL20,
+    '23/24':(r) => r.pctPrev,
+    PROJ:   (r) => r.proj,
+    DIFF:   (r) => r.diff,
+    DVP:    (r) => r.dvp
+  }
+
+  function cmp(a: unknown, b: unknown): number {
+    // Push null/undefined to the bottom regardless of direction by treating them as +Infinity
+    const isNil = (v: unknown) => v == null || v === '—'
+    if (isNil(a) && isNil(b)) return 0
+    if (isNil(a)) return 1
+    if (isNil(b)) return -1
+
+    // Numeric compare when both look like numbers
+    const na = typeof a === 'number' ? a : Number(a)
+    const nb = typeof b === 'number' ? b : Number(b)
+    const bothNumeric = Number.isFinite(na) && Number.isFinite(nb)
+
+    if (bothNumeric) {
+      return na === nb ? 0 : na < nb ? -1 : 1
+    }
+
+    // Fallback to case-insensitive string compare
+    const sa = String(a).toLowerCase()
+    const sb = String(b).toLowerCase()
+    return sa.localeCompare(sb)
+  }
+
+  function sortRows(rowsIn: TableRow[]): TableRow[] {
+    const val = selectors[sortKey]
+    const sign = sortDir === 'asc' ? 1 : -1
+    // Stable sort: tag with index
+    return rowsIn
+      .map((r, i) => ({ r, i }))
+      .sort((x, y) => {
+        const c = cmp(val(x.r), val(y.r))
+        return c !== 0 ? sign * c : x.i - y.i
+      })
+      .map(x => x.r)
+  }
+
+  const sorted = React.useMemo(() => sortRows(rows), [rows, sortKey, sortDir])
+
+  function handleSort(col: ColKey) {
+    if (col === sortKey) {
+      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'))
+    } else {
+      setSortKey(col)
+      setSortDir('asc')
+    }
+  }
+
+  function ariaSort(col: ColKey): React.AriaAttributes['aria-sort'] {
+    if (col !== sortKey) return 'none'
+    return sortDir === 'asc' ? 'ascending' : 'descending'
+  }
+
+  const headers: { key: ColKey; label: string; sticky?: boolean }[] = [
+    { key: 'PLAYER', label: 'PLAYER', sticky: true },
+    { key: 'L', label: 'L' },
+    { key: 'O', label: 'O' },
+    { key: 'U', label: 'U' },
+    { key: 'STK', label: 'STK' },
+    { key: '24/25', label: '24/25' },
+    { key: 'H2H', label: 'H2H' },
+    { key: 'L5', label: 'L5' },
+    { key: 'L10', label: 'L10' },
+    { key: 'L20', label: 'L20' },
+    { key: '23/24', label: '23/24' },
+    { key: 'PROJ', label: 'PROJ' },
+    { key: 'DIFF', label: 'DIFF' },
+    { key: 'DVP', label: 'DVP' }
+  ]
+
   return (
     <div className={styles.wrapper}>
       <table className={styles.table}>
         <thead>
           <tr>
-            <th className={styles.headerStickyLeft}>PLAYER</th>
-            <th>L</th>
-            <th>O</th>
-            <th>U</th>
-            <th>STK</th>
-            <th>24/25</th>
-            <th>H2H</th>
-            <th>L5</th>
-            <th>L10</th>
-            <th>L20</th>
-            <th>23/24</th>
-            <th>PROJ</th>
-            <th>DIFF</th>
-            <th>DVP</th>
+            {headers.map(h => (
+              <th
+                key={h.key}
+                className={`${h.sticky ? styles.headerStickyLeft : ''} ${styles.header}`}
+                aria-sort={ariaSort(h.key)}
+              >
+                <button
+                  className={styles.headerButton}
+                  onClick={() => handleSort(h.key)}
+                  data-active={h.key === sortKey ? 'true' : 'false'}
+                  data-dir={sortDir}
+                  title={`Sort by ${h.label}`}
+                >
+                  <span>{h.label}</span>
+                  <span className={styles.sortArrow} aria-hidden="true" />
+                </button>
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map(r => (
+          {sorted.map(r => (
             <tr key={`${r.id}-${r.stat}`}>
               <td className={styles.stickyCol}>
                 <div>
@@ -60,6 +160,7 @@ export default function Table({ rows }: Props) {
                   <AltBadge show={r.hasAlt} />
                 </div>
               </td>
+
               <td className={styles.num}>{r.line ?? '—'}</td>
               <td className={styles.num}>{r.over ?? '—'}</td>
               <td className={styles.num}>{r.under ?? '—'}</td>

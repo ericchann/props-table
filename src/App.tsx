@@ -6,12 +6,11 @@ import { getLines } from './api/lines'
 import { getProjections } from './api/projections'
 import { getTrends } from './api/trends'
 import { getInjuries } from './api/injuries'
-// alt lines intentionally not used anymore
 import { getSchedule } from './api/schedule'
 import { buildRows } from './lib/join'
 
 export default function App() {
-  const [stat] = useState<'points'>('points')
+  const [stat, setStat] = useState<'points' | 'rebounds' | 'assists'>('points')
 
   const qLines = useQuery({ queryKey: ['lines'], queryFn: getLines })
   const qProjections = useQuery({ queryKey: ['projections'], queryFn: getProjections })
@@ -31,23 +30,79 @@ export default function App() {
   const error = [qLines, qProjections, qTrends, qInjuries, qSchedule].find(q => q.isError)?.error
 
   if (isLoading) return <Loading />
-  if (error) return <div style={{ padding: 20, color: 'crimson' }}>Failed to fetch data: {String(error)}</div>
+  if (error) {
+    return (
+      <div style={{ padding: 12 }}>
+        <h2>Error</h2>
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{String(error)}</pre>
+      </div>
+    )
+  }
 
-  // build rows from fetched data
-  const rows = buildRows('points', {
+  const rows = buildRows(stat, {
     lines: qLines.data ?? [],
     projections: qProjections.data ?? [],
     trends: qTrends.data ?? [],
     injuries: qInjuries.data ?? [],
-    alt: [], // intentionally empty: do not include alt-lines
+    alt: [],
     schedule: qSchedule.data ?? []
   })
-  console.debug('[App] built rows', rows.length, rows.slice(0, 5))
+
+  // N/A filter: drop rows with 3+ N/As across core fields
+  function isNA(v: unknown) {
+    if (v == null) return true
+    const s = String(v).trim()
+    return s === '—' || s === '---'
+  }
+  function countNAs(row: any) {
+    const CORE_FIELDS = ['over','under','pctSeason','pctL5','pctL10','pctL20','proj','diff'] as const
+    let n = 0
+    for (const f of CORE_FIELDS) if (isNA(row[f])) n++
+    return n
+  }
+
+  const MAX_ALLOWED_NA = 2
+  const removedRows = rows.filter(r => countNAs(r) > MAX_ALLOWED_NA)
+  let filteredRows = rows.filter(r => countNAs(r) <= MAX_ALLOWED_NA)
+  if (filteredRows.length === 0) {
+    console.warn('[App] N/A filter removed all rows. Falling back to unfiltered.')
+    filteredRows = rows
+  }
+
+  console.debug('[App] built rows', rows.length, 'kept', filteredRows.length, 'removed', removedRows.length)
+  if (removedRows.length > 0) {
+    console.debug('[App] removed rows:', removedRows.map(r => ({
+      player: r.player,
+      team: r.team,
+      position: r.position,
+      stat: r.stat,
+      id: r.id
+    })))
+  }
 
   return (
     <div style={{ padding: 12 }}>
-      <h2>Props table (stat: {stat})</h2>
-      <Table rows={rows} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+        <h2 style={{ margin: 0 }}>Props table</h2>
+        <label htmlFor="stat" style={{ fontWeight: 600 }}>Stat</label>
+        <select
+          id="stat"
+          value={stat}
+          onChange={(e) => setStat(e.target.value as 'points' | 'rebounds' | 'assists')}
+          style={{
+            padding: '6px 8px',
+            border: '1px solid #e1e1e1',
+            borderRadius: 8,
+            background: '#fff',
+            fontSize: 14
+          }}
+        >
+          <option value="points">Points</option>
+          <option value="rebounds">Rebounds</option>
+          <option value="assists">Assists</option>
+        </select>
+      </div>
+      <Table rows={filteredRows} />
     </div>
   )
 }

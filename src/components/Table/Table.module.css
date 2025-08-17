@@ -87,3 +87,54 @@ tbody tr:hover td {
 .smallText { font-size: 12px; color: #6a6a6a; font-weight: 500; }
 
 .odds { font-variant-numeric: tabular-nums; color: #3a3a3a; }
+
+/* --- sortable header additions --- */
+
+.header {
+  /* Applied to <th> to let the button fill edge to edge */
+  padding: 0;
+}
+
+.headerButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  padding: 6px 8px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 120ms ease-in;
+}
+
+.headerButton:hover {
+  background-color: rgba(0,0,0,0.06); /* darker on hover */
+}
+
+/* Arrow: appears only when column is active, direction via data-dir */
+.sortArrow {
+  inline-size: 0.8em;
+  text-align: center;
+  opacity: 0;                 /* hidden by default */
+  transition: opacity 120ms ease-in;
+}
+
+/* On hover, show a faint arrow so the affordance is discoverable */
+.headerButton:hover .sortArrow {
+  opacity: 0.35;
+}
+
+.headerButton[data-active="true"] .sortArrow {
+  opacity: 1;                 /* fully visible when active */
+}
+
+/* Use the data attributes to set the arrow character */
+.headerButton[data-active="true"][data-dir="asc"] .sortArrow::after {
+  content: "▲";
+}
+
+.headerButton[data-active="true"][data-dir="desc"] .sortArrow::after {
+  content: "▼";
+}

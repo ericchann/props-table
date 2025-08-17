@@ -8,6 +8,24 @@ type Dict<T> = Record<string, T | undefined>
 const byId = <T extends { id: string }>(rows: T[]) =>
   rows.reduce<Dict<T>>((m, r) => (m[r.id] = r, m), {})
 
+// Remove "-points" | "-rebounds" | "-assists" from id
+function baseId(id: string): string {
+  return id.replace(/-(points|rebounds|assists)$/i, '')
+}
+
+// Check if id ends with the given stat suffix
+function idHasStat(id: string, stat: StatKey): boolean {
+  return new RegExp(`-${stat}$`, 'i').test(id)
+}
+
+// Choose the first non-empty string
+function pickStr(...vals: Array<unknown>): string | null {
+  for (const v of vals) {
+    if (typeof v === 'string' && v.trim() !== '') return v
+  }
+  return null
+}
+
 export function buildRows(
   stat: StatKey,
   opts: {
@@ -29,25 +47,43 @@ export function buildRows(
     schedule: opts.schedule.length
   })
 
-  const projById = byId(opts.projections)
-  const trendById = byId(opts.trends)
+  // Index by BASE id for projections and trends
+  const projByBase = Object.values(byId(opts.projections)).reduce<Dict<ProjectionsRow>>((m, pr) => {
+    if (!pr) return m
+    m[baseId(pr.id)] = pr
+    return m
+  }, {})
+
+  const trendByBase = Object.values(byId(opts.trends)).reduce<Dict<TrendsRow>>((m, tr) => {
+    if (!tr) return m
+    m[baseId(tr.id)] = tr
+    return m
+  }, {})
+
   const gameById = opts.schedule.reduce<Dict<ScheduleGame>>((m, g) => (m[g.id] = g, m), {})
-  const injById = opts.injuries.reduce<Dict<InjuryRow>>((m, r) => (m[r.id] = r, m), {})
+  const injByBase = opts.injuries.reduce<Dict<InjuryRow>>((m, r) => {
+    m[baseId(r.id)] = r
+    return m
+  }, {})
 
   const rows: TableRow[] = []
 
   for (const l of opts.lines) {
+    // Only keep the selected stat
+    if (typeof l.id === 'string' && !idHasStat(l.id, stat)) continue
+
+    const bId = baseId(l.id)
     const p = (l.projection as any)?.[stat]
     if (!p || !p.summary) {
       console.debug('[buildRows] skip: missing projection/summary', { id: l.id, name: l.name })
       continue
     }
 
-    const pr = projById[l.id]
-    const projVal = (pr?.projections as any)?.[stat] ?? null
-
-    const t = trendById[l.id]
+    const pr = projByBase[bId]
+    const t = trendByBase[bId]
     const tb: TrendsBucket | null | undefined = t?.[stat] ?? null
+
+    const projVal = (pr?.projections as any)?.[stat] ?? null
 
     const g = gameById[l.gameId]
     const opponent =
@@ -60,17 +96,25 @@ export function buildRows(
     const under = p.summary.underPrice ?? null
     const diff = (projVal != null && line != null) ? +(projVal - line).toFixed(1) : null
 
-    // no alt-lines usage anymore — always false
+    // Pull position from wherever it exists
+    const position =
+      pickStr(
+        (l as any).position,
+        (pr as any)?.position,
+        (pr as any)?.pos,
+        (t as any)?.position
+      ) ?? '' // empty string if truly unknown
+
     const hasAlt = false
-    const inj = injById[l.id]?.status ?? null
+    const inj = injByBase[bId]?.status ?? null
 
     const row = {
-      id: l.id,
+      id: `${bId}-${stat}`,
       stat,
       player: l.name,
       name: l.name,
       team: l.team,
-      position: l.position,
+      position,           // <-- make sure this is always present if available
       opponent,
       line,
       over,
