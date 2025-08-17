@@ -7,6 +7,12 @@ const I = z.object({
   position: z.string(), status: z.string(), isOut: z.boolean()
 })
 export async function getInjuries(): Promise<InjuryRow[]> {
-  const { data } = await api.get('/injuries')
-  return z.array(I).parse(data) // injuries shape ✔  :contentReference[oaicite:17]{index=17}
+  try {
+    const { data } = await api.get('/injuries')
+    const parsed = z.array(I).parse(data) // injuries shape ✔  :contentReference[oaicite:17]{index=17}
+    return parsed
+  } catch (err) {
+    console.warn('getInjuries: parse failed, returning empty array', err)
+    return []
+  }
 }

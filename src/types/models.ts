@@ -50,10 +50,10 @@ export type ProjectionsRow = {
 
 // /prop-trends
 export type TrendsBucket = {
-  line: number | null
-  rate: number | null
-  over: number | string | null
-  under: number | string | null
+  line?: number | null
+  rate?: number | null
+  over?: number | string | null
+  under?: number | string | null
   oppDef?: number | null
   l20Rate?: number | string | null
   l10Rate?: number | null
@@ -67,14 +67,25 @@ export type TrendsBucket = {
   vsOppGames?: number | null
 }
 
-export type TrendsRow = {
-  id: PlayerId
-  name: string
-  team: TeamAbbr
-  position: string
-  gameId: GameId
-  [key in StatKey]?: TrendsBucket | null
-}
+export type TrendsRowBase = {
+  id: PlayerId;
+  name: string;
+  team: TeamAbbr;
+  position: string;
+  gameId: GameId;
+};
+
+export type TrendsRowDynamic = {
+  [key in StatKey]?: TrendsBucket | null;
+};
+
+// Combined type for TrendsRow
+export type TrendsRow = TrendsRowBase & TrendsRowDynamic;
+
+// Utility type to safely index TrendsRow with StatKey
+export type TrendsRowSafe = Omit<TrendsRow, keyof Record<StatKey, unknown>> & {
+  [key in StatKey]?: TrendsBucket | null;
+};
 
 // /lines
 export type LinesBook = { book: string; value?: number | null; overPrice?: number | string | null; underPrice?: number | string | null }

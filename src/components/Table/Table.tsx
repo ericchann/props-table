@@ -4,29 +4,31 @@ import { InjuryBadge, AltBadge } from '../Badges'
 
 type Props = { rows: TableRow[] }
 
-function heatPercent(p?: number | null) {
-  if (p == null) return {}
-  const hue = Math.max(0, Math.min(100, p)) * 1.2 // 0..100 → 0..120
-  return { backgroundColor: `hsl(${hue} 75% 92%)` } as React.CSSProperties
-}
-
-function heatDiff(d?: number | null) {
-  if (d == null) return {}
-  const clamped = Math.max(-5, Math.min(5, d))
-  const pct = (clamped + 5) / 10 // 0..1
-  const hue = pct * 120
-  return { backgroundColor: `hsl(${hue} 75% 92%)` } as React.CSSProperties
-}
-
-function dvpPill(rank?: number | null) {
-  if (rank == null) return '—'
-  const label = rank === 1 ? '1st' : rank === 2 ? '2nd' : rank === 3 ? '3rd' : `${rank}th`
-  const bg = rank <= 5 ? '#fde7e7' : '#eee'
-  const color = rank <= 5 ? '#a11111' : '#444'
-  return <span style={{ background: bg, color, borderRadius: 999, padding: '2px 8px', fontWeight: 600, fontSize: 12 }}>{label}</span>
-}
-
 export default function Table({ rows }: Props) {
+  console.debug('[Table] rows count', rows.length, rows.slice(0,3))
+
+  function heatPercent(p?: number | null) {
+    if (p == null) return {}
+    const hue = Math.max(0, Math.min(100, p)) * 1.2 // 0..100 → 0..120
+    return { backgroundColor: `hsl(${hue} 75% 92%)` } as React.CSSProperties
+  }
+
+  function heatDiff(d?: number | null) {
+    if (d == null) return {}
+    const clamped = Math.max(-5, Math.min(5, d))
+    const pct = (clamped + 5) / 10 // 0..1
+    const hue = pct * 120
+    return { backgroundColor: `hsl(${hue} 75% 92%)` } as React.CSSProperties
+  }
+
+  function dvpPill(rank?: number | null) {
+    if (rank == null) return '—'
+    const label = rank === 1 ? '1st' : rank === 2 ? '2nd' : rank === 3 ? '3rd' : `${rank}th`
+    const bg = rank <= 5 ? '#fde7e7' : '#eee'
+    const color = rank <= 5 ? '#a11111' : '#444'
+    return <span style={{ background: bg, color, borderRadius: 999, padding: '2px 8px', fontWeight: 600, fontSize: 12 }}>{label}</span>
+  }
+
   return (
     <div className={styles.wrapper}>
       <table className={styles.table}>

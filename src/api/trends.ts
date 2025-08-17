@@ -36,6 +36,12 @@ const T = z.object({
   fantasyPts: TB.nullable().optional(),
 })
 export async function getTrends(): Promise<TrendsRow[]> {
-  const { data } = await api.get('/prop-trends')
-  return z.array(T).parse(data) // trends columns ✔  :contentReference[oaicite:20]{index=20}
+  try {
+    const { data } = await api.get('/prop-trends')
+    const parsed = z.array(T).parse(data) // trends columns ✔  :contentReference[oaicite:20]{index=20}
+    return parsed
+  } catch (err) {
+    console.warn('getTrends: parse failed, returning empty array', err)
+    return []
+  }
 }

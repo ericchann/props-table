@@ -1,56 +1,52 @@
-import { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import Loading from './components/Loading'
+import Table from './components/Table/Table'
 import { getLines } from './api/lines'
 import { getProjections } from './api/projections'
 import { getTrends } from './api/trends'
 import { getInjuries } from './api/injuries'
-import { getAltLines } from './api/altLines'
+// alt lines intentionally not used anymore
 import { getSchedule } from './api/schedule'
 import { buildRows } from './lib/join'
-import type { StatKey } from './types/models'
-import Table from './components/Table/Table'
 
 export default function App() {
-  const [stat, setStat] = useState<StatKey>('points')
+  const [stat] = useState<'points'>('points')
 
-  const qLines       = useQuery({ queryKey: ['lines'],       queryFn: getLines })
-  const qProj        = useQuery({ queryKey: ['projections'], queryFn: getProjections })
-  const qTrends      = useQuery({ queryKey: ['trends'],      queryFn: getTrends })
-  const qInj         = useQuery({ queryKey: ['injuries'],    queryFn: getInjuries })
-  const qAlt         = useQuery({ queryKey: ['alt-lines'],   queryFn: getAltLines })
-  const qSchedule    = useQuery({ queryKey: ['schedule'],    queryFn: getSchedule })
+  const qLines = useQuery({ queryKey: ['lines'], queryFn: getLines })
+  const qProjections = useQuery({ queryKey: ['projections'], queryFn: getProjections })
+  const qTrends = useQuery({ queryKey: ['trends'], queryFn: getTrends })
+  const qInjuries = useQuery({ queryKey: ['injuries'], queryFn: getInjuries })
+  const qSchedule = useQuery({ queryKey: ['schedule'], queryFn: getSchedule })
 
-  const isLoading = [qLines, qProj, qTrends, qInj, qAlt, qSchedule].some(q => q.isLoading)
-  const isError   = [qLines, qProj, qTrends, qInj, qAlt, qSchedule].some(q => q.isError)
+  React.useEffect(() => {
+    console.debug('[App] qLines:', { status: qLines.status, length: qLines.data?.length ?? 'nil', error: qLines.error })
+    console.debug('[App] qProjections:', { status: qProjections.status, length: qProjections.data?.length ?? 'nil', error: qProjections.error })
+    console.debug('[App] qTrends:', { status: qTrends.status, length: qTrends.data?.length ?? 'nil', error: qTrends.error })
+    console.debug('[App] qInjuries:', { status: qInjuries.status, length: qInjuries.data?.length ?? 'nil', error: qInjuries.error })
+    console.debug('[App] qSchedule:', { status: qSchedule.status, length: qSchedule.data?.length ?? 'nil', error: qSchedule.error })
+  }, [qLines.status, qProjections.status, qTrends.status, qInjuries.status, qSchedule.status])
 
-  const rows = useMemo(() => {
-    if (![qLines.data, qProj.data, qTrends.data, qInj.data, qAlt.data, qSchedule.data].every(Boolean)) return []
-    return buildRows(stat, {
-      lines: qLines.data!, projections: qProj.data!,
-      trends: qTrends.data!, injuries: qInj.data!,
-      alt: qAlt.data!, schedule: qSchedule.data!
-    })
-  }, [stat, qLines.data, qProj.data, qTrends.data, qInj.data, qAlt.data, qSchedule.data])
+  const isLoading = [qLines, qProjections, qTrends, qInjuries, qSchedule].some(q => q.isLoading)
+  const error = [qLines, qProjections, qTrends, qInjuries, qSchedule].find(q => q.isError)?.error
 
-  if (isLoading) return <div style={{padding:20}}>Loading…</div>
-  if (isError)   return <div style={{padding:20}}>Failed to fetch data</div>
+  if (isLoading) return <Loading />
+  if (error) return <div style={{ padding: 20, color: 'crimson' }}>Failed to fetch data: {String(error)}</div>
+
+  // build rows from fetched data
+  const rows = buildRows('points', {
+    lines: qLines.data ?? [],
+    projections: qProjections.data ?? [],
+    trends: qTrends.data ?? [],
+    injuries: qInjuries.data ?? [],
+    alt: [], // intentionally empty: do not include alt-lines
+    schedule: qSchedule.data ?? []
+  })
+  console.debug('[App] built rows', rows.length, rows.slice(0, 5))
 
   return (
-    <div style={{ padding: 16 }}>
-      <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-        {(['points','rebounds','assists','fg3PtMade','pointsReboundsAssists','pointsRebounds','pointsAssists','reboundsAssists','fantasyPts'] as StatKey[]).map(s => (
-          <button key={s}
-            onClick={() => setStat(s)}
-            style={{
-              padding: '6px 10px', borderRadius: 999, border: '1px solid #e5e7eb',
-              background: s === stat ? '#111827' : '#fff',
-              color: s === stat ? '#fff' : '#111',
-              cursor: 'pointer'
-            }}>
-            {s}
-          </button>
-        ))}
-      </div>
+    <div style={{ padding: 12 }}>
+      <h2>Props table (stat: {stat})</h2>
       <Table rows={rows} />
     </div>
   )
