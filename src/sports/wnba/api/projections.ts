@@ -1,5 +1,5 @@
 import { api } from './client'
-import type { ProjectionsRow } from '../types/models'
+import type { ProjectionsRow } from '../../../types/models'
 
 export async function getProjections(): Promise<ProjectionsRow[]> {
   try {
@@ -8,11 +8,10 @@ export async function getProjections(): Promise<ProjectionsRow[]> {
 
     const normalized: ProjectionsRow[] = raw.map((r: any) => {
       return {
-        id: String(r?.id ?? ''),                 // coerce null -> ''
+        id: String(r?.id ?? ''),
         name: r?.name ?? '',
         team: r?.team ?? '',
         gameId: String(r?.gameId ?? ''),
-        // ensure lines/projections are objects; API sometimes uses "projection" or "projections"
         lines: typeof r?.lines === 'object' && r.lines !== null ? r.lines : {},
         projections: typeof r?.projections === 'object' && r.projections !== null
           ? r.projections

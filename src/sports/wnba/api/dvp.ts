@@ -42,7 +42,6 @@ export async function getDvp(team: string): Promise<DvpRankMap> {
     C:  { PTS: null, TRB: null, AST: null },
   }
 
-  // Based on the API response structure you showed, we need to parse the positional data
   if (data.positional) {
     for (const [stat, statData] of Object.entries(data.positional)) {
       for (const [pos, posData] of Object.entries(statData as any)) {
@@ -51,10 +50,8 @@ export async function getDvp(team: string): Promise<DvpRankMap> {
         
         const currentSeason = (posData as any)?.currentSeason
         if (Array.isArray(currentSeason) && currentSeason.length >= 2) {
-          // The rank is the second element of the currentSeason array
           const rank = currentSeason[1]
           if (typeof rank === 'number') {
-            // Map the stat key to our API stat key format
             if (stat === 'PTS') ranks[normPos].PTS = rank
             else if (stat === 'AST') ranks[normPos].AST = rank
             else if (stat === 'TRB') ranks[normPos].TRB = rank
@@ -64,6 +61,5 @@ export async function getDvp(team: string): Promise<DvpRankMap> {
     }
   }
 
-  // IMPORTANT: return the normalized key we queried with so Map lookups work
   return { team, ranks }
 }

@@ -1,24 +1,28 @@
 import React, { useMemo, useState } from 'react'
 import { useQuery, useQueries } from '@tanstack/react-query'
+// React already imported above
 import Loading from './components/Loading'
-import Table from './components/Table/Table'
-import { getLines } from './api/lines'
-import { getProjections } from './api/projections'
-import { getTrends } from './api/trends'
-import { getInjuries } from './api/injuries'
-import { getSchedule } from './api/schedule'
-import { buildRows } from './lib/join'
-import { getDvp, type DvpRankMap, type DvpPos, type ApiStatKey } from './api/dvp'
+// keep the default shared Loading import above for fallback
+// Table moved into sport-specific folder; we'll import the WNBA table dynamically below
+import { getLines, getProjections, getTrends, getInjuries, getSchedule, getDvp } from './sports/wnba/api'
+import { buildRows } from './sports/wnba/lib/join'
+import type { DvpRankMap, DvpPos, ApiStatKey } from './api/dvp'
+import { getSportConfig } from './sports'
 
-export default function App() {
+import type { SportId } from './sports'
+// sport-specific components
+import TableWnba from './sports/wnba/components/Table'
+// WNBA-specific loading used only inside WNBA components; avoid unused import here
+
+export default function App({ sport = 'wnba' }: { sport?: SportId }) {
   const [stat, setStat] = useState<'points' | 'rebounds' | 'assists'>('points')
 
   // ---- Queries ----
-  const qLines = useQuery({ queryKey: ['lines'], queryFn: getLines })
-  const qProjections = useQuery({ queryKey: ['projections'], queryFn: getProjections })
-  const qTrends = useQuery({ queryKey: ['trends'], queryFn: getTrends })
-  const qInjuries = useQuery({ queryKey: ['injuries'], queryFn: getInjuries })
-  const qSchedule = useQuery({ queryKey: ['schedule'], queryFn: getSchedule })
+  const qLines = useQuery({ queryKey: ['lines', sport], queryFn: () => getLines(sport) })
+  const qProjections = useQuery({ queryKey: ['projections', sport], queryFn: () => getProjections(sport) })
+  const qTrends = useQuery({ queryKey: ['trends', sport], queryFn: () => getTrends(sport) })
+  const qInjuries = useQuery({ queryKey: ['injuries', sport], queryFn: () => getInjuries(sport) })
+  const qSchedule = useQuery({ queryKey: ['schedule', sport], queryFn: () => getSchedule(sport) })
 
   React.useEffect(() => {
 
@@ -34,37 +38,13 @@ export default function App() {
     schedule: qSchedule.data ?? [],
   })
 
-  // ---------- Team normalization ----------
-  const TEAM_ALIASES: Record<string, string> = {
-    ATL: 'ATL', CHI: 'CHI', CON: 'CON', DAL: 'DAL', IND: 'IND',
-    LAS: 'LAS', LVA: 'LVA', MIN: 'MIN', NYL: 'NYL', PHX: 'PHX',
-    SEA: 'SEA', WAS: 'WAS', GSV: 'GSV',
-    // common alternates / normalizations
-    NY: 'NYL', NYC: 'NYL', LIBERTY: 'NYL', 'NEW YORK': 'NYL', 'NEW YORK LIBERTY': 'NYL',
-    LV: 'LVA', 'LAS VEGAS': 'LVA', 'LAS VEGAS ACES': 'LVA', ACES: 'LVA',
-    LA: 'LAS', 'LOS ANGELES': 'LAS', 'LOS ANGELES SPARKS': 'LAS', SPARKS: 'LAS',
-    PHO: 'PHX', PHOENIX: 'PHX', 'PHOENIX MERCURY': 'PHX', MERCURY: 'PHX',
-    CONN: 'CON', CONNECTICUT: 'CON', 'CONNECTICUT SUN': 'CON', SUN: 'CON',
-    CHICAGO: 'CHI', 'CHICAGO SKY': 'CHI', SKY: 'CHI',
-    ATLANTA: 'ATL', 'ATLANTA DREAM': 'ATL', DREAM: 'ATL',
-    DALLAS: 'DAL', 'DALLAS WINGS': 'DAL', WINGS: 'DAL',
-    INDIANA: 'IND', 'INDIANA FEVER': 'IND', FEVER: 'IND',
-    MINNESOTA: 'MIN', 'MINNESOTA LYNX': 'MIN', LYNX: 'MIN',
-    SEATTLE: 'SEA', 'SEATTLE STORM': 'SEA', STORM: 'SEA',
-    WASHINGTON: 'WAS', 'WASHINGTON MYSTICS': 'WAS', MYSTICS: 'WAS',
+  // ---------- Sport-specific normalization ----------
+  const cfg = getSportConfig(sport)
+  let normalizeTeam: (raw?: string | null) => string | null = (r) => {
+    if (!r) return null
+    return r.toString().trim().toUpperCase().slice(0, 3)
   }
-
-  function normalizeTeam(raw?: string | null): string | null {
-    if (!raw) return null
-    const t = raw.toString().trim().toUpperCase().replace(/\./g, '').replace(/\s+/g, ' ')
-    if (TEAM_ALIASES[t]) return TEAM_ALIASES[t]
-    const first3 = t.slice(0, 3)
-    if (TEAM_ALIASES[first3]) return TEAM_ALIASES[first3]
-    if (t === 'NY') return 'NYL'
-    if (t === 'LV') return 'LVA'
-    if (t === 'LA') return 'LAS'
-    return null
-  }
+  if (cfg && typeof cfg.normalizeTeam === 'function') normalizeTeam = cfg.normalizeTeam
 
   // ---------- Derive opponent from SCHEDULE (home/away) ----------
   type SGame = { id: string; home: string; away: string }
@@ -103,13 +83,13 @@ export default function App() {
     return Array.from(s).sort()
   }, [rowsEnsuredOpp])
 
-  // When querying DVP, remap 'GSV' → 'LVA'
+  // When querying DVP, remap 'GSV'  'LVA'
   const dvpQueries = useQueries({
     queries: teamsNeeded.map(team => {
       const queryTeam = team === 'GSV' ? 'LVA' : team
       return {
-        queryKey: ['dvp', queryTeam],
-        queryFn: () => getDvp(queryTeam),
+        queryKey: ['dvp', queryTeam, sport],
+        queryFn: () => getDvp(queryTeam, sport),
         staleTime: 60 * 60 * 1000,
         enabled: teamsNeeded.length > 0, // Add this to ensure queries run
       }
@@ -207,7 +187,7 @@ export default function App() {
   return (
     <div style={{ padding: 20, textAlign: 'center' }}>
       <h1 style={{ fontSize: '100px', fontWeight: 700, marginBottom: '80px' }}>
-        WNBA Betting Table
+        {sport === 'wnba' ? 'WNBA Betting Table' : `${sport.toUpperCase()} Betting Table`}
       </h1>
 
       <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
@@ -235,7 +215,15 @@ export default function App() {
 
       {/* If your Table component needs a strict type, keep `opponent` as string above.
           Casting to any avoids friction if TableRow's exact type differs. */}
-      <Table rows={filteredRows as any} />
+      {/* sport-specific table rendering */}
+      {sport === 'wnba' ? (
+        <TableWnba rows={filteredRows as any} />
+      ) : (
+        <div style={{ padding: 40 }}>
+          <h2>{sport.toUpperCase()} table not implemented yet</h2>
+          <p>Placeholder page for {sport} — add a sport-specific Table component under <code>src/sports/{sport}/components/</code>.</p>
+        </div>
+      )}
     </div>
   )
 }

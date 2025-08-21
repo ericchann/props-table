@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { api } from './client'
-import type { LinesRow } from '../types/models'
+import type { LinesRow } from '../../../types/models'
 
 const L = z.object({
   // id may be null in some upstream responses — accept nullable then filter/normalize later
@@ -41,7 +41,6 @@ export async function getLines(): Promise<LinesRow[]> {
       return statsToShow.map((stat) => {
         const projVal = (p as any).projection?.[stat]
         return {
-          // keep base id but also include stat so other code can construct variant ids
           id: `${baseId}-${stat}`,
           baseId,
           name: playerName,
@@ -49,8 +48,6 @@ export async function getLines(): Promise<LinesRow[]> {
           team: p.team,
           stat,
           proj: typeof projVal === 'number' ? projVal : projVal == null ? null : Number(projVal),
-          // keep other fields the Table/join expects (fill with null/defaults)
-          // p was coerced to LinesRow earlier; use 'any' here because LinesRow doesn't declare `summary`
           summary: (p as any).summary ?? null,
           projection: p.projection ?? {},
         } as unknown as LinesRow
@@ -65,4 +62,3 @@ export async function getLines(): Promise<LinesRow[]> {
     return []
   }
 }
- 

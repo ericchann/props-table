@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { api } from './client'
-import type { TrendsRow } from '../types/models'
+import type { TrendsRow } from '../../../types/models'
 
 const TB = z.object({
   line: z.number().nullable().optional(),
@@ -38,7 +38,7 @@ const T = z.object({
 export async function getTrends(): Promise<TrendsRow[]> {
   try {
     const { data } = await api.get('/prop-trends')
-    const parsed = z.array(T).parse(data) // trends columns ✔  :contentReference[oaicite:20]{index=20}
+    const parsed = z.array(T).parse(data) // trends columns ✓
     return parsed
   } catch (err) {
     console.warn('getTrends: parse failed, returning empty array', err)

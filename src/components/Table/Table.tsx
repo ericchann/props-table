@@ -11,6 +11,7 @@ type ColKey =
   | '24/25' | 'H2H' | 'L5' | 'L10' | 'L20' | '23/24'
   | 'PROJ' | 'DIFF' | 'DVP' | 'TIME' // Add TIME
 
+
 // Add this function after heatDiff
 function heatDvp(rank?: number | null): React.CSSProperties {
   if (rank == null) return {}

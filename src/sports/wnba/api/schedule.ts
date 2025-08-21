@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { api } from './client'
-import type { ScheduleGame } from '../types/models'
+import type { ScheduleGame } from '../../../types/models'
 
 const S = z.object({
   id: z.string(), date: z.string(), time: z.string(),
@@ -9,7 +9,7 @@ const S = z.object({
 export async function getSchedule(): Promise<ScheduleGame[]> {
   try {
     const { data } = await api.get('/schedule')
-    const parsed = z.array(S).parse(data) // schedule shape  ✔  :contentReference[oaicite:16]{index=16}
+    const parsed = z.array(S).parse(data) // schedule shape  ✓
     return parsed
   } catch (err) {
     console.warn('getSchedule: parse failed, returning empty array', err)

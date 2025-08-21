@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { api } from './client'
-import type { AltLinesRow } from '../types/models'
+import type { AltLinesRow } from '../../../types/models'
 
 const A = z.object({
   prop: z.enum([
@@ -24,7 +24,7 @@ const A = z.object({
 export async function getAltLines(): Promise<AltLinesRow[]> {
   try {
     const { data } = await api.get('/alt-lines')
-    const parsed = z.array(A).parse(data) // alt-lines markets ✔  :contentReference[oaicite:18]{index=18}
+    const parsed = z.array(A).parse(data)
     return parsed
   } catch (err) {
     console.warn('getAltLines: parse failed, returning empty array', err)
