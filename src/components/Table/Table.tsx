@@ -11,18 +11,6 @@ type ColKey =
   | '24/25' | 'H2H' | 'L5' | 'L10' | 'L20' | '23/24'
   | 'PROJ' | 'DIFF' | 'DVP' | 'TIME' // Add TIME
 
-function getColorForValue(value: number, min: number, max: number): string {
-  if (max === min) return '#ffffff'
-  
-  const ratio = (value - min) / (max - min)
-  
-  // Green (good) to Red (bad) gradient
-  const red = Math.round(255 * ratio)
-  const green = Math.round(255 * (1 - ratio))
-  
-  return `rgb(${red}, ${green}, 100)`
-}
-
 // Add this function after heatDiff
 function heatDvp(rank?: number | null): React.CSSProperties {
   if (rank == null) return {}
@@ -71,16 +59,6 @@ function heatDiff(d?: number | null): React.CSSProperties {
   return { backgroundColor: `hsl(${hue} ${sat}% ${light}%)` }
 }
 
-
-
-
-  function dvpPill(rank?: number | null) {
-    if (rank == null) return '—'
-    const label = rank === 1 ? '1st' : rank === 2 ? '2nd' : rank === 3 ? '3rd' : `${rank}th`
-    const bg = rank <= 5 ? '#fde7e7' : '#eee'
-    const color = rank <= 5 ? '#a11111' : '#444'
-    return <span style={{ background: bg, color, borderRadius: 999, padding: '2px 8px', fontWeight: 600, fontSize: 12 }}>{label}</span>
-  }
 
   // Map each header to a value selector for sorting
   const selectors: Record<ColKey, (r: TableRow) => string | number | null | undefined> = {

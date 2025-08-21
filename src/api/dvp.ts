@@ -10,43 +10,6 @@ export interface DvpRankMap {
 
 const API_TOKEN = import.meta.env.VITE_API_TOKEN
 
-// Depth-limited recursive numeric extractor for wildly varying payloads.
-function pickRankDeep(node: any, depth = 0): number | null {
-  if (node == null || depth > 4) return null
-  if (typeof node === 'number' && Number.isFinite(node)) return node
-
-  if (Array.isArray(node)) {
-    // Common older shape: array where index 1 is the rank
-    const idx1 = node[1]
-    if (typeof idx1 === 'number' && Number.isFinite(idx1)) return idx1
-    for (const v of node) {
-      const n = pickRankDeep(v, depth + 1)
-      if (n != null) return n
-    }
-    return null
-  }
-
-  if (typeof node === 'object') {
-    // Try obvious keys first
-    const preferredKeys = [
-      'rank', 'currentRank', 'r', 'value',
-      'currentSeason', 'current_season', 'season', 'thisSeason', 'overall'
-    ]
-    for (const k of preferredKeys) {
-      if (k in node) {
-        const n = pickRankDeep((node as any)[k], depth + 1)
-        if (n != null) return n
-      }
-    }
-    // Fall back: scan all values
-    for (const v of Object.values(node)) {
-      const n = pickRankDeep(v, depth + 1)
-      if (n != null) return n
-    }
-  }
-  return null
-}
-
 function normalizePosKey(raw: string | undefined): DvpPos | null {
   if (!raw) return null
   const t = raw.toString().trim().toUpperCase()

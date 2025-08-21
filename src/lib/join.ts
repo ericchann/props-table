@@ -132,7 +132,6 @@ export function buildRows(
     return m
   }, {})
 
-  const gameById = opts.schedule.reduce<Dict<ScheduleGame>>((m, g) => (m[g.id] = g, m), {})
   const injByBase = opts.injuries.reduce<Dict<InjuryRow>>((m, r) => {
     m[baseId(r.id)] = r
     return m
