@@ -3,42 +3,104 @@ import axios from 'axios'
 export type ApiStatKey = 'PTS' | 'TRB' | 'AST'
 export type DvpPos = 'PG' | 'SG' | 'SF' | 'PF' | 'C'
 
-export type DvpRankMap = {
+export interface DvpRankMap {
   team: string
-  // ranks[pos][apiStat] = rank number (1..N) or null
-  ranks: Record<DvpPos, Partial<Record<ApiStatKey, number | null>>>
+  ranks: Record<DvpPos, Record<ApiStatKey, number | null>>
 }
 
-const POSITIONS: DvpPos[] = ['PG', 'SG', 'SF', 'PF', 'C']
-const API_STATS: ApiStatKey[] = ['PTS', 'TRB', 'AST']
+const API_TOKEN = import.meta.env.VITE_API_TOKEN
 
-/**
- * Expected shape:
- * data.positional[PTS|TRB|AST][PG|SG|SF|PF|C].currentSeason -> [value, rank]
- */
-export async function getDvp(team: string): Promise<DvpRankMap> {
-  const url = `https://api.props.cash/wnba/def-vs-pos?team=${encodeURIComponent(team)}`
-  const { data } = await axios.get(url, { timeout: 15000 })
+// Depth-limited recursive numeric extractor for wildly varying payloads.
+function pickRankDeep(node: any, depth = 0): number | null {
+  if (node == null || depth > 4) return null
+  if (typeof node === 'number' && Number.isFinite(node)) return node
 
-  const positional = (data && (data as any).positional) || {}
-  const ranks: DvpRankMap['ranks'] = {
-    PG: {},
-    SG: {},
-    SF: {},
-    PF: {},
-    C: {},
+  if (Array.isArray(node)) {
+    // Common older shape: array where index 1 is the rank
+    const idx1 = node[1]
+    if (typeof idx1 === 'number' && Number.isFinite(idx1)) return idx1
+    for (const v of node) {
+      const n = pickRankDeep(v, depth + 1)
+      if (n != null) return n
+    }
+    return null
   }
 
-  for (const stat of API_STATS) {
-    const byPos = positional?.[stat] || {}
-    for (const pos of POSITIONS) {
-      const currentSeason = byPos?.[pos]?.currentSeason
-      const rank = Array.isArray(currentSeason) && currentSeason.length >= 2
-        ? currentSeason[1]
-        : null
-      ;(ranks[pos] as any)[stat] = typeof rank === 'number' ? rank : null
+  if (typeof node === 'object') {
+    // Try obvious keys first
+    const preferredKeys = [
+      'rank', 'currentRank', 'r', 'value',
+      'currentSeason', 'current_season', 'season', 'thisSeason', 'overall'
+    ]
+    for (const k of preferredKeys) {
+      if (k in node) {
+        const n = pickRankDeep((node as any)[k], depth + 1)
+        if (n != null) return n
+      }
+    }
+    // Fall back: scan all values
+    for (const v of Object.values(node)) {
+      const n = pickRankDeep(v, depth + 1)
+      if (n != null) return n
+    }
+  }
+  return null
+}
+
+function normalizePosKey(raw: string | undefined): DvpPos | null {
+  if (!raw) return null
+  const t = raw.toString().trim().toUpperCase()
+  if (t === 'PG' || t === 'SG' || t === 'SF' || t === 'PF' || t === 'C') return t as DvpPos
+  if (t === 'G' || t === 'GUARD') return 'PG'
+  if (t === 'F' || t === 'FORWARD') return 'SF'
+  if (t === 'CENTER') return 'C'
+  // Some APIs send combined buckets; dump them into the first slot so we show something
+  if (t === 'PG/SG') return 'PG'
+  if (t === 'SF/PF') return 'SF'
+  if (t === 'PF/C' || t === 'C/PF') return 'C'
+  return null
+}
+
+export async function getDvp(team: string): Promise<DvpRankMap> {
+  if (!API_TOKEN) throw new Error('Missing VITE_API_TOKEN in .env.local')
+
+  const url = `https://api.props.cash/wnba/def-vs-pos?team=${team}`
+
+  const res = await axios.get(url, {
+    headers: { Authorization: `Bearer ${API_TOKEN}` },
+  })
+  const data = res.data
+
+  const ranks: DvpRankMap['ranks'] = {
+    PG: { PTS: null, TRB: null, AST: null },
+    SG: { PTS: null, TRB: null, AST: null },
+    SF: { PTS: null, TRB: null, AST: null },
+    PF: { PTS: null, TRB: null, AST: null },
+    C:  { PTS: null, TRB: null, AST: null },
+  }
+
+  // Based on the API response structure you showed, we need to parse the positional data
+  if (data.positional) {
+    for (const [stat, statData] of Object.entries(data.positional)) {
+      for (const [pos, posData] of Object.entries(statData as any)) {
+        const normPos = normalizePosKey(pos)
+        if (!normPos) continue
+        
+        const currentSeason = (posData as any)?.currentSeason
+        if (Array.isArray(currentSeason) && currentSeason.length >= 2) {
+          // The rank is the second element of the currentSeason array
+          const rank = currentSeason[1]
+          if (typeof rank === 'number') {
+            // Map the stat key to our API stat key format
+            if (stat === 'PTS') ranks[normPos].PTS = rank
+            else if (stat === 'AST') ranks[normPos].AST = rank
+            else if (stat === 'TRB') ranks[normPos].TRB = rank
+          }
+        }
+      }
     }
   }
 
+  // IMPORTANT: return the normalized key we queried with so Map lookups work
   return { team, ranks }
 }

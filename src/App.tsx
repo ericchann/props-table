@@ -13,7 +13,7 @@ import { getDvp, type DvpRankMap, type DvpPos, type ApiStatKey } from './api/dvp
 export default function App() {
   const [stat, setStat] = useState<'points' | 'rebounds' | 'assists'>('points')
 
-  // ---- Queries (always same order) ----
+  // ---- Queries ----
   const qLines = useQuery({ queryKey: ['lines'], queryFn: getLines })
   const qProjections = useQuery({ queryKey: ['projections'], queryFn: getProjections })
   const qTrends = useQuery({ queryKey: ['trends'], queryFn: getTrends })
@@ -21,67 +21,25 @@ export default function App() {
   const qSchedule = useQuery({ queryKey: ['schedule'], queryFn: getSchedule })
 
   React.useEffect(() => {
-    console.debug('[App] qLines:', { status: qLines.status, length: qLines.data?.length ?? 'nil', error: qLines.error })
-    console.debug('[App] qProjections:', { status: qProjections.status, length: qProjections.data?.length ?? 'nil', error: qProjections.error })
-    console.debug('[App] qTrends:', { status: qTrends.status, length: qTrends.data?.length ?? 'nil', error: qTrends.error })
-    console.debug('[App] qInjuries:', { status: qInjuries.status, length: qInjuries.data?.length ?? 'nil', error: qInjuries.error })
-    console.debug('[App] qSchedule:', { status: qSchedule.status, length: qSchedule.data?.length ?? 'nil', error: qSchedule.error })
+
   }, [qLines.status, qProjections.status, qTrends.status, qInjuries.status, qSchedule.status])
 
-  // Build rows even while queries are loading (empty arrays until ready)
+  // Build rows (works even while some queries are still loading)
   const rows = buildRows(stat, {
     lines: qLines.data ?? [],
     projections: qProjections.data ?? [],
     trends: qTrends.data ?? [],
     injuries: qInjuries.data ?? [],
     alt: [],
-    schedule: qSchedule.data ?? []
+    schedule: qSchedule.data ?? [],
   })
 
-  // ---------- Derive opponent from schedule when missing ----------
-  type SGame = { id: string; home: string; away: string }
-  const gameById = useMemo(() => {
-    const m = new Map<string, SGame>()
-    for (const g of (qSchedule.data ?? []) as any[]) {
-      // Allow various shapes {id, home, away} or {id, homeTeam, awayTeam}
-      const home = (g as any).home ?? (g as any).homeTeam
-      const away = (g as any).away ?? (g as any).awayTeam
-      if (g?.id && home && away) m.set(String(g.id), { id: String(g.id), home: String(home), away: String(away) })
-    }
-    return m
-  }, [qSchedule.data])
-
-  function deriveOpponent(row: any): string | null {
-    // If already present, use it
-    if (row?.opponent) return String(row.opponent)
-    const team = row?.team ? String(row.team) : null
-    const gid = row?.gameId ? String(row.gameId) : null
-    if (team && gid && gameById.has(gid)) {
-      const g = gameById.get(gid)!
-      if (team === g.home) return g.away
-      if (team === g.away) return g.home
-    }
-    // Fallbacks: some rows might carry homeTeam/awayTeam on themselves
-    const homeTeam = row?.homeTeam
-    const awayTeam = row?.awayTeam
-    if (team && homeTeam && awayTeam) {
-      return team === homeTeam ? String(awayTeam) : String(homeTeam)
-    }
-    return null
-  }
-
-  const rowsEnsuredOpp = rows.map(r => {
-    const opp = deriveOpponent(r)
-    if (!opp) console.debug('[DVP] opponent missing; could not derive from schedule', { id: r.id, team: r.team, gameId: (r as any).gameId })
-    return { ...r, opponent: opp ?? r.opponent ?? null }
-  })
-
-  // --------- TEAM NORMALIZATION (map to Props.cash codes) ----------
+  // ---------- Team normalization ----------
   const TEAM_ALIASES: Record<string, string> = {
     ATL: 'ATL', CHI: 'CHI', CON: 'CON', DAL: 'DAL', IND: 'IND',
     LAS: 'LAS', LVA: 'LVA', MIN: 'MIN', NYL: 'NYL', PHX: 'PHX',
-    SEA: 'SEA', WAS: 'WAS',
-    // common alternates
+    SEA: 'SEA', WAS: 'WAS', GSV: 'GSV',
+    // common alternates / normalizations
     NY: 'NYL', NYC: 'NYL', LIBERTY: 'NYL', 'NEW YORK': 'NYL', 'NEW YORK LIBERTY': 'NYL',
     LV: 'LVA', 'LAS VEGAS': 'LVA', 'LAS VEGAS ACES': 'LVA', ACES: 'LVA',
     LA: 'LAS', 'LOS ANGELES': 'LAS', 'LOS ANGELES SPARKS': 'LAS', SPARKS: 'LAS',
@@ -108,7 +66,34 @@ export default function App() {
     return null
   }
 
-  // --------- DVP (fetch per normalized opponent team, cached) ----------
+  // ---------- Derive opponent from SCHEDULE (home/away) ----------
+  type SGame = { id: string; home: string; away: string }
+
+  const opponentByTeam = React.useMemo(() => {
+    const m = new Map<string, string>()
+    const games = (qSchedule.data ?? []) as SGame[]
+
+    for (const g of games) {
+      const home = normalizeTeam(g?.home)
+      const away = normalizeTeam(g?.away)
+      if (!home || !away) continue
+      m.set(home, away)
+      m.set(away, home)
+    }
+    return m
+  }, [qSchedule.data])
+
+  const rowsEnsuredOpp = rows.map(r => {
+    const team = normalizeTeam((r as any)?.team)
+    if (!team) {
+      
+      return { ...r, opponent: '' } // keep prop shape: string
+    }
+    const opp = opponentByTeam.get(team) ?? ''
+    return { ...r, opponent: opp }
+  })
+
+  // --------- DVP lookup ----------
   const teamsNeeded = useMemo(() => {
     const s = new Set<string>()
     for (const r of rowsEnsuredOpp) {
@@ -118,33 +103,32 @@ export default function App() {
     return Array.from(s).sort()
   }, [rowsEnsuredOpp])
 
+  // When querying DVP, remap 'GSV' → 'LVA'
   const dvpQueries = useQueries({
-    queries: teamsNeeded.map(team => ({
-      queryKey: ['dvp', team],
-      queryFn: () => getDvp(team),
-      staleTime: 60 * 60 * 1000, // 1 hour cache
-    })),
+    queries: teamsNeeded.map(team => {
+      const queryTeam = team === 'GSV' ? 'LVA' : team
+      return {
+        queryKey: ['dvp', queryTeam],
+        queryFn: () => getDvp(queryTeam),
+        staleTime: 60 * 60 * 1000,
+        enabled: teamsNeeded.length > 0, // Add this to ensure queries run
+      }
+    }),
   })
-
-  React.useEffect(() => {
-    dvpQueries.forEach(q => {
-      if (q.isError) console.warn('[DVP] fetch error', q.queryKey, q.error)
-    })
-  }, [dvpQueries])
 
   const dvpByTeam = useMemo(() => {
     const m = new Map<string, DvpRankMap>()
-    dvpQueries.forEach(q => {
+    dvpQueries.forEach((q) => {
       const d = q.data as DvpRankMap | undefined
       if (d?.team) m.set(d.team, d)
     })
     return m
   }, [dvpQueries])
 
-  // app stat → API stat key
+  // UI stat → API key
   const STAT_TO_API: Record<'points' | 'rebounds' | 'assists', ApiStatKey> = {
     points: 'PTS',
-    rebounds: 'TRB',
+    rebounds: 'TRB', // canonical
     assists: 'AST',
   }
 
@@ -154,27 +138,36 @@ export default function App() {
     if (first === 'PG' || first === 'SG' || first === 'SF' || first === 'PF' || first === 'C') return first as DvpPos
     if (first === 'G') return 'PG'
     if (first === 'F') return 'SF'
-    if (first === 'C') return 'C'
     return null
   }
 
   const rowsWithDvp = rowsEnsuredOpp.map(r => {
-    const normTeam = normalizeTeam((r as any).opponent)
+    const rawOpp = (r as any).opponent as string
+    const normTeam = normalizeTeam(rawOpp)
+    const dvpTeam = normTeam === 'GSV' ? 'LVA' : normTeam
     const pos = normalizePos((r as any).position)
     const apiStat = STAT_TO_API[stat]
-    const dvp = normTeam ? dvpByTeam.get(normTeam) : undefined
+    const dvp = dvpTeam ? dvpByTeam.get(dvpTeam) : undefined
 
     let rank: number | null = null
     if (dvp && pos) {
-      const byPos = dvp.ranks[pos]
-      const maybe = byPos?.[apiStat]
-      rank = typeof maybe === 'number' ? maybe : null
+      const byPos = dvp.ranks[pos] as Record<string, number | null> | undefined
+      const keysToTry = apiStat === 'TRB' ? (['TRB', 'REB'] as const) : ([apiStat] as const)
+      
+      for (const k of keysToTry) {
+        const v = byPos?.[k]
+        if (typeof v === 'number') { 
+          rank = v
+          break 
+        }
+      }
     }
 
     return { ...r, dvp: rank }
   })
 
-  // ---- N/A filter: drop rows with >= 3 N/As across core fields ----
+
+  // ---- N/A filter ----
   function isNA(v: unknown) {
     if (v == null) return true
     const s = String(v).trim()
@@ -195,7 +188,7 @@ export default function App() {
     filteredRows = rowsWithDvp
   }
 
-  // After all hooks: decide what to render
+  // Final loading/error gate
   const isLoading = [qLines, qProjections, qTrends, qInjuries, qSchedule].some(q => q.isLoading)
   const error = [qLines, qProjections, qTrends, qInjuries, qSchedule].find(q => q.isError)?.error
 
@@ -209,7 +202,6 @@ export default function App() {
     )
   }
 
-  console.debug('[App] DVP teams needed:', teamsNeeded)
   console.debug('[App] built rows', rows.length, 'kept', filteredRows.length, 'removed', removedRows.length)
 
   return (
@@ -218,7 +210,6 @@ export default function App() {
         WNBA Betting Table
       </h1>
 
-      {/* Center this whole form group, but left-align its contents */}
       <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
         <label htmlFor="stat" style={{ fontWeight: 500, display: 'block', marginBottom: 8 }}>
           Props
@@ -242,7 +233,9 @@ export default function App() {
         </select>
       </div>
 
-      <Table rows={filteredRows} />
+      {/* If your Table component needs a strict type, keep `opponent` as string above.
+          Casting to any avoids friction if TableRow's exact type differs. */}
+      <Table rows={filteredRows as any} />
     </div>
   )
 }

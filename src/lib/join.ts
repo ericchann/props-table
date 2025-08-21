@@ -26,6 +26,86 @@ function pickStr(...vals: Array<unknown>): string | null {
   return null
 }
 
+// Helper function to format game time in EST (uses IANA zone to handle DST)
+function formatGameTime(game?: ScheduleGame): string | null {
+  if (!game?.time) return null
+  try {
+    const dt = new Date(game.time)
+    // Use Intl to convert to America/New_York (handles EST/EDT)
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      month: '2-digit',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
+    // result like "08/17/ 3:00 PM" — strip year if present
+    const parts = fmt.formatToParts(dt)
+    const month = parts.find(p => p.type === 'month')?.value ?? ''
+    const day = parts.find(p => p.type === 'day')?.value ?? ''
+    const hour = parts.find(p => p.type === 'hour')?.value ?? ''
+    const minute = parts.find(p => p.type === 'minute')?.value ?? ''
+    const dayPeriod = parts.find(p => p.type === 'dayPeriod')?.value ?? ''
+    if (!month || !day || !hour || !minute) return null
+    return `${month}/${day} ${hour}:${minute} ${dayPeriod}`
+  } catch (err) {
+    console.error('[buildRows] formatGameTime error', err, game)
+    return null
+  }
+}
+
+function findScheduleGame(schedule: ScheduleGame[] | undefined, l: any) {
+  if (!schedule?.length) return undefined
+
+  // 1) try explicit gameId
+  if (l.gameId) {
+    const byId = schedule.find(s => s.id === l.gameId)
+    if (byId) return byId
+  }
+
+  const norm = (s?: string) => (s || '').toLowerCase().replace(/\s+/g, '')
+  const lHome = norm(l.homeTeam)
+  const lAway = norm(l.awayTeam)
+  const lTeam = norm(l.team)
+  const lOpp = norm(l.opponent)
+
+  // 2) try exact home/away pair
+  let match = schedule.find(s => {
+    const sh = norm((s as any).home)
+    const sa = norm((s as any).away)
+    if (lHome || lAway) {
+      return (sh === lHome && sa === lAway) || (sh === lAway && sa === lHome)
+    }
+    if (lTeam && lOpp) {
+      return (sh === lTeam && sa === lOpp) || (sh === lOpp && sa === lTeam)
+    }
+    // fallback: either team matches schedule home/away
+    return sh === lTeam || sa === lTeam || sh === lOpp || sa === lOpp
+  })
+  if (match) return match
+
+  // 3) try matching by datetime proximity (use line.gameStart if present)
+  if (l.gameStart) {
+    const gs = new Date(l.gameStart)
+    if (!isNaN(gs.getTime())) {
+      const toleranceMs = 1000 * 60 * 60 * 6 // 6 hours
+      match = schedule.find(s => {
+        const st = new Date((s as any).time || (s as any).date || '')
+        if (isNaN(st.getTime())) return false
+        const dt = Math.abs(st.getTime() - gs.getTime())
+        if (dt > toleranceMs) return false
+        const sh = norm((s as any).home)
+        const sa = norm((s as any).away)
+        return sh === lTeam || sa === lTeam || sh === lOpp || sa === lOpp
+      })
+      if (match) return match
+    }
+  }
+
+  return undefined
+}
+
 export function buildRows(
   stat: StatKey,
   opts: {
@@ -37,15 +117,7 @@ export function buildRows(
     schedule: ScheduleGame[]
   }
 ): TableRow[] {
-  console.debug('[buildRows] start', {
-    stat,
-    lines: opts.lines.length,
-    projections: opts.projections.length,
-    trends: opts.trends.length,
-    injuries: opts.injuries.length,
-    alt: opts.alt.length,
-    schedule: opts.schedule.length
-  })
+  // removed debug logging
 
   // Index by BASE id for projections and trends
   const projByBase = Object.values(byId(opts.projections)).reduce<Dict<ProjectionsRow>>((m, pr) => {
@@ -75,7 +147,6 @@ export function buildRows(
     const bId = baseId(l.id)
     const p = (l.projection as any)?.[stat]
     if (!p || !p.summary) {
-      console.debug('[buildRows] skip: missing projection/summary', { id: l.id, name: l.name })
       continue
     }
 
@@ -85,7 +156,9 @@ export function buildRows(
 
     const projVal = (pr?.projections as any)?.[stat] ?? null
 
-    const g = gameById[l.gameId]
+    const g = findScheduleGame(opts.schedule, l)
+
+    // existing opponent computation uses g
     const opponent =
       l.team === g?.home ? g?.away :
       l.team === g?.away ? g?.home :
@@ -107,6 +180,16 @@ export function buildRows(
 
     const hasAlt = false
     const inj = injByBase[bId]?.status ?? null
+    // Prefer formatted schedule time; fallback to the line's gameStart if schedule didn't match
+    let gameTime = formatGameTime(g) ?? null
+    if (!gameTime && (l as any).gameStart) {
+      try {
+        const gsIso = new Date((l as any).gameStart).toISOString()
+        gameTime = formatGameTime({ id: '', time: gsIso, home: l.homeTeam ?? '', away: l.awayTeam ?? '' } as ScheduleGame)
+      } catch {
+        gameTime = null
+      }
+    }
 
     const row = {
       id: `${bId}-${stat}`,
@@ -130,12 +213,12 @@ export function buildRows(
       diff,
       dvp: null,
       inj,
-      hasAlt
+      hasAlt,
+      gameTime // Add gameTime to the row
     } as unknown as TableRow
 
     rows.push(row)
   }
 
-  console.debug('[buildRows] done', { rowsCount: rows.length, first: rows[0] })
   return rows
 }

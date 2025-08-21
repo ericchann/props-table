@@ -9,10 +9,38 @@ type SortDir = 'asc' | 'desc'
 type ColKey =
   | 'PLAYER' | 'L' | 'O' | 'U' | 'STK'
   | '24/25' | 'H2H' | 'L5' | 'L10' | 'L20' | '23/24'
-  | 'PROJ' | 'DIFF' | 'DVP'
+  | 'PROJ' | 'DIFF' | 'DVP' | 'TIME' // Add TIME
+
+function getColorForValue(value: number, min: number, max: number): string {
+  if (max === min) return '#ffffff'
+  
+  const ratio = (value - min) / (max - min)
+  
+  // Green (good) to Red (bad) gradient
+  const red = Math.round(255 * ratio)
+  const green = Math.round(255 * (1 - ratio))
+  
+  return `rgb(${red}, ${green}, 100)`
+}
+
+// Add this function after heatDiff
+function heatDvp(rank?: number | null): React.CSSProperties {
+  if (rank == null) return {}
+  // DVP ranks are typically 1-13, where 1 is best defense (hardest matchup) and 13 is worst defense (easiest matchup)
+  // Convert to 0-100 scale where 100 = easiest matchup (rank 13) and 0 = hardest matchup (rank 1)
+  const clampedRank = Math.max(1, Math.min(13, rank))
+  const pct = ((clampedRank - 1) / 12) * 100 // rank 1 = 0%, rank 13 = 100%
+  
+  // Use same color logic as heatPercent
+  const hue = pct * 1.2 // 0..120
+  const dist = Math.abs(pct - 50) / 50 // 0..1 away from 50
+  const sat = 58                          // fixed for softer color
+  const light = 92 - dist * 12            // 92% near white -> ~80% at extremes
+  return { backgroundColor: `hsl(${hue} ${sat}% ${light}%)` }
+}
 
 export default function Table({ rows }: Props) {
-  console.debug('[Table] rows count', rows.length, rows.slice(0,3))
+
 
   const [sortKey, setSortKey] = React.useState<ColKey>('L5')
   const [sortDir, setSortDir] = React.useState<SortDir>('desc')
@@ -69,7 +97,8 @@ function heatDiff(d?: number | null): React.CSSProperties {
     '23/24':(r) => r.pctPrev,
     PROJ:   (r) => r.proj,
     DIFF:   (r) => r.diff,
-    DVP:    (r) => r.dvp
+    DVP:    (r) => r.dvp,
+    TIME:   (r) => r.gameTime ?? '' // Add TIME selector
   }
 
   function cmp(a: unknown, b: unknown): number {
@@ -137,7 +166,8 @@ function heatDiff(d?: number | null): React.CSSProperties {
     { key: '23/24', label: '23/24' },
     { key: 'PROJ', label: 'PROJ' },
     { key: 'DIFF', label: 'DIFF' },
-    { key: 'DVP', label: 'DVP' }
+    { key: 'DVP', label: 'DVP' },
+    { key: 'TIME', label: 'TIME' } // Add TIME header
   ]
 
   return (
@@ -190,7 +220,10 @@ function heatDiff(d?: number | null): React.CSSProperties {
 
               <td className={styles.num}>{r.proj?.toFixed(1) ?? '—'}</td>
               <td className={styles.cell} style={heatDiff(r.diff)}>{r.diff?.toFixed?.(1) ?? r.diff ?? '—'}</td>
-              <td>{dvpPill(r.dvp)}</td>
+              <td className={styles.cell} style={heatDvp(r.dvp)}>
+                {r.dvp ? (r.dvp === 1 ? '1st' : r.dvp === 2 ? '2nd' : r.dvp === 3 ? '3rd' : `${r.dvp}th`) : '—'}
+              </td>
+              <td className={styles.cell}>{r.gameTime ?? '—'}</td>
             </tr>
           ))}
         </tbody>

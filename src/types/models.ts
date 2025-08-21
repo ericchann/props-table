@@ -133,4 +133,5 @@ export type TableRow = {
 
   inj?: 'OUT' | 'GTD' | 'OFS' | string | null
   hasAlt?: boolean
+  gameTime: string | null
 }
