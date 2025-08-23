@@ -6,7 +6,7 @@ import Loading from './components/Loading'
 // Table moved into sport-specific folder; we'll import the WNBA table dynamically below
 import { getLines, getProjections, getTrends, getInjuries, getSchedule, getDvp } from './sports/wnba/api'
 import { buildRows } from './sports/wnba/lib/join'
-import type { DvpRankMap, DvpPos, ApiStatKey } from './api/dvp'
+import type { DvpRankMap, DvpPos, ApiStatKey } from './sports/wnba/api/dvp'
 import { getSportConfig } from './sports'
 
 import type { SportId } from './sports'
