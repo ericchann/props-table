@@ -33,6 +33,17 @@ export function buildRows(
     | 'map12Kills' | 'map3Kills' | 'map12Headshots' | 'map3Headshots' | 'map1Kills' | 'map1Headshots'
 ): TableRow[] {
   const rows: TableRow[] = []
+  function getGameTimestamp(l: any, g?: ScheduleGame): number | null {
+    try {
+      const cand = (g as any)?.time ?? (g as any)?.date ?? (l as any)?.gameStart ?? null
+      if (!cand) return null
+      const dt = new Date(cand)
+      const t = dt.getTime()
+      return Number.isFinite(t) ? t : null
+    } catch {
+      return null
+    }
+  }
   for (const l of lines) {
     // projection containers may include multiple prop groups; try to read relevant props
     const proj = l.projection ?? {}
@@ -104,7 +115,7 @@ export function buildRows(
       return tsl && tsl === lname || tnm && tnm === lname || tid && tid === lname
     }) as any
 
-    for (const p of props) {
+  for (const p of props) {
       if (selectedProp && selectedProp !== p.key) continue
       const line = readProp(p.path)
       if (line == null) continue // only emit rows that exist
@@ -142,7 +153,11 @@ export function buildRows(
         hasAlt: false,
         gameTime: formatGameTime(g)
       }
-      rows.push(row)
+  // Skip rows for games already in the past when we can determine the timestamp
+  const ts = getGameTimestamp(l, g)
+  if (ts != null && ts <= Date.now()) continue
+
+  rows.push(row)
     }
   }
   return rows

@@ -95,6 +95,18 @@ function findScheduleGame(schedule: ScheduleGame[] | undefined, l: any) {
   return undefined
 }
 
+function getGameTimestamp(l: any, g?: ScheduleGame): number | null {
+  try {
+    const cand = (g as any)?.time ?? (g as any)?.date ?? (l as any)?.gameStart ?? null
+    if (!cand) return null
+    const dt = new Date(cand)
+    const t = dt.getTime()
+    return Number.isFinite(t) ? t : null
+  } catch {
+    return null
+  }
+}
+
 export function buildRows(
   stat: StatKey,
   opts: {
@@ -197,6 +209,12 @@ export function buildRows(
       hasAlt,
       gameTime
     } as unknown as TableRow
+
+    // Skip rows for games that are already in the past (if we can determine the time)
+    const ts = getGameTimestamp(l, g)
+    if (ts != null && ts <= Date.now()) {
+      continue
+    }
 
     rows.push(row)
   }
