@@ -3,7 +3,7 @@ import type { ProjectionsRow } from '../../../types/models'
 
 export async function getProjections(): Promise<ProjectionsRow[]> {
   try {
-    const res = await api.get('/projections')
+  const res = await api.get('/wnba/projections')
     const raw = Array.isArray(res.data) ? res.data : []
 
     const normalized: ProjectionsRow[] = raw.map((r: any) => {

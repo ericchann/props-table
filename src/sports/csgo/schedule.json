@@ -1,0 +1,299 @@
+[
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T11:00:00Z",
+    "home": "500",
+    "home_id": 132007,
+    "away": "Favbet",
+    "away_id": 134964,
+    "id": "500favbet20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T12:30:00Z",
+    "home": "NXT",
+    "home_id": 137062,
+    "away": "Phantom",
+    "away_id": 136560,
+    "id": "nxtphantom20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T14:00:00Z",
+    "home": "ARCRED",
+    "home_id": 130360,
+    "away": "SPARTA",
+    "away_id": 136659,
+    "id": "arcredsparta20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T14:00:00Z",
+    "home": "CYBERSHOKE Esports",
+    "home_id": 133542,
+    "away": "Betera Esports",
+    "away_id": 133560,
+    "id": "betera esportscybershoke esports20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T14:30:00Z",
+    "home": "TheMongolz",
+    "home_id": 3272,
+    "away": "Vitality",
+    "away_id": 3455,
+    "id": "themongolzvitality20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T15:30:00Z",
+    "home": "Speed Demons",
+    "home_id": 137274,
+    "away": "Preasy Esport",
+    "away_id": 133463,
+    "id": "preasy esportspeed demons20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T17:00:00Z",
+    "home": "GUN5 Esports",
+    "home_id": 133726,
+    "away": "1WIN",
+    "away_id": 126944,
+    "id": "1wingun5 esports20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T17:00:00Z",
+    "home": "Partizan Esport",
+    "home_id": 131561,
+    "away": "ARCRED",
+    "away_id": 130360,
+    "id": "arcredpartizan esport20250823"
+  },
+  {
+    "date": "2025-08-23",
+    "time": "2025-08-23T17:45:00Z",
+    "home": "Team Falcons",
+    "home_id": 130564,
+    "away": "Aurora Gaming",
+    "away_id": 131505,
+    "id": "aurora gamingteam falcons20250823"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T00:00:00Z",
+    "home": "True Synergy Gaming",
+    "home_id": 137150,
+    "away": "FULL SEND",
+    "away_id": 137287,
+    "id": "full sendtrue synergy gaming20250823"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T00:00:00Z",
+    "home": "Chicken Coop Esports",
+    "home_id": 136064,
+    "away": "Getting Info",
+    "away_id": 136220,
+    "id": "chicken coop esportsgetting info20250823"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T08:00:00Z",
+    "home": "CYBERSHOKE Esports",
+    "home_id": 133542,
+    "away": "K27",
+    "away_id": 135298,
+    "id": "cybershoke esportsk2720250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T08:00:00Z",
+    "home": "Betclic Apogee Esports",
+    "home_id": 135381,
+    "away": "Eternal Fire",
+    "away_id": 129413,
+    "id": "betclic apogee esportseternal fire20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T09:30:00Z",
+    "home": "Sangal ALTERS",
+    "home_id": 136593,
+    "away": "Insilio",
+    "away_id": 130064,
+    "id": "insiliosangal alters20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T11:00:00Z",
+    "home": "Betera Esports",
+    "home_id": 133560,
+    "away": "FORZE Reload",
+    "away_id": 135126,
+    "id": "betera esportsforze reload20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T11:00:00Z",
+    "home": "Tricked",
+    "home_id": 125071,
+    "away": "Monte",
+    "away_id": 131441,
+    "id": "montetricked20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T12:30:00Z",
+    "home": "Team Nemesis",
+    "home_id": 137289,
+    "away": "777",
+    "away_id": 128110,
+    "id": "777team nemesis20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T12:30:00Z",
+    "home": "Dynamo Eclot",
+    "home_id": 129356,
+    "away": "UNiTY esports",
+    "away_id": 133063,
+    "id": "dynamo eclotunity esports20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T14:00:00Z",
+    "home": "SENZA Esports",
+    "home_id": 137199,
+    "away": "KHAN",
+    "away_id": 129141,
+    "id": "khansenza esports20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T14:00:00Z",
+    "home": "Alliance",
+    "home_id": 133725,
+    "away": "SPARTA",
+    "away_id": 136659,
+    "id": "alliancesparta20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T14:00:00Z",
+    "home": "SPARTA",
+    "home_id": 136659,
+    "away": "Favbet",
+    "away_id": 134964,
+    "id": "favbetsparta20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T14:30:00Z",
+    "home": "KUUSAMO.gg",
+    "home_id": 130733,
+    "away": "Team spargo-",
+    "away_id": 137283,
+    "id": "kuusamo.ggteam spargo-20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T15:00:00Z",
+    "home": "Sinners",
+    "home_id": 127014,
+    "away": "YoCrew",
+    "away_id": 137281,
+    "id": "sinnersyocrew20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T15:30:00Z",
+    "home": "MASONIC",
+    "home_id": 127911,
+    "away": "Dark Tigers",
+    "away_id": 127744,
+    "id": "dark tigersmasonic20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T16:00:00Z",
+    "home": "UNiTY esports",
+    "home_id": 133063,
+    "away": "LPH Gaming",
+    "away_id": 136786,
+    "id": "lph gamingunity esports20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T17:00:00Z",
+    "home": "Dynamo Eclot",
+    "home_id": 129356,
+    "away": "Veni Vidi Vici",
+    "away_id": 134914,
+    "id": "dynamo eclotveni vidi vici20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T17:00:00Z",
+    "home": "Sangal",
+    "home_id": 127365,
+    "away": "Nuclear TigeRES",
+    "away_id": 135673,
+    "id": "nuclear tigeressangal20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T17:00:00Z",
+    "home": " CSDIILIT",
+    "home_id": 137251,
+    "away": "smuuttikusilkki",
+    "away_id": 132400,
+    "id": " csdiilitsmuuttikusilkki20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T17:00:00Z",
+    "home": "Zero Tenacity",
+    "home_id": 129685,
+    "away": "Metizport",
+    "away_id": 129440,
+    "id": "metizportzero tenacity20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T18:00:00Z",
+    "home": "GLORE",
+    "home_id": 129357,
+    "away": "Brute",
+    "away_id": 126624,
+    "id": "bruteglore20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T18:00:00Z",
+    "home": "hypewrld",
+    "home_id": 134049,
+    "away": "Back2TheGame",
+    "away_id": 134905,
+    "id": "back2thegamehypewrld20250824"
+  },
+  {
+    "date": "2025-08-24",
+    "time": "2025-08-24T18:30:00Z",
+    "home": "8Sins",
+    "home_id": 135669,
+    "away": "QUAZAR",
+    "away_id": 130570,
+    "id": "8sinsquazar20250824"
+  },
+  {
+    "date": "2025-08-25",
+    "time": "2025-08-25T10:30:00Z",
+    "home": "Wildcard Academy",
+    "home_id": 136075,
+    "away": "EYEBALLERS",
+    "away_id": 131189,
+    "id": "eyeballerswildcard academy20250825"
+  }
+]

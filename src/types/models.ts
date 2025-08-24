@@ -7,6 +7,8 @@ export type StatKey =
   | 'fg3PtMade' | 'pointsReboundsAssists'
   | 'pointsRebounds' | 'pointsAssists'
   | 'reboundsAssists' | 'fantasyPts'
+  // CSGO props
+  | 'map12Kills' | 'map3Kills' | 'map12Headshots' | 'map3Headshots' | 'map1Kills' | 'map1Headshots'
 
 // /schedule
 export type ScheduleGame = {

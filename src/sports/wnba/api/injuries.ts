@@ -8,7 +8,7 @@ const I = z.object({
 })
 export async function getInjuries(): Promise<InjuryRow[]> {
   try {
-    const { data } = await api.get('/injuries')
+  const { data } = await api.get('/wnba/injuries')
     const parsed = z.array(I).parse(data) // injuries shape ✓
     return parsed
   } catch (err) {

@@ -37,7 +37,7 @@ const T = z.object({
 })
 export async function getTrends(): Promise<TrendsRow[]> {
   try {
-    const { data } = await api.get('/prop-trends')
+  const { data } = await api.get('/wnba/prop-trends')
     const parsed = z.array(T).parse(data) // trends columns ✓
     return parsed
   } catch (err) {

@@ -6,37 +6,47 @@ import Loading from './components/Loading'
 // Table moved into sport-specific folder; we'll import the WNBA table dynamically below
 import { getLines, getProjections, getTrends, getInjuries, getSchedule, getDvp } from './sports/wnba/api'
 import { buildRows } from './sports/wnba/lib/join'
+// CSGO imports
+import * as csgoApi from './sports/csgo/api'
+import { buildRows as buildRowsCsgo } from './sports/csgo/lib/join'
 import type { DvpRankMap, DvpPos, ApiStatKey } from './sports/wnba/api/dvp'
 import { getSportConfig } from './sports'
 
 import type { SportId } from './sports'
 // sport-specific components
 import TableWnba from './sports/wnba/components/Table'
+import TableCsgo from './sports/csgo/components/Table'
 // WNBA-specific loading used only inside WNBA components; avoid unused import here
 
 export default function App({ sport = 'wnba' }: { sport?: SportId }) {
   const [stat, setStat] = useState<'points' | 'rebounds' | 'assists'>('points')
+  // CSGO prop selector: keys match StatKey entries in types/models.ts
+  const [csgoProp, setCsgoProp] = useState<
+    'map12Kills' | 'map3Kills' | 'map12Headshots' | 'map3Headshots' | 'map1Kills' | 'map1Headshots'
+  >('map12Kills')
 
   // ---- Queries ----
-  const qLines = useQuery({ queryKey: ['lines', sport], queryFn: () => getLines(sport) })
-  const qProjections = useQuery({ queryKey: ['projections', sport], queryFn: () => getProjections(sport) })
-  const qTrends = useQuery({ queryKey: ['trends', sport], queryFn: () => getTrends(sport) })
-  const qInjuries = useQuery({ queryKey: ['injuries', sport], queryFn: () => getInjuries(sport) })
-  const qSchedule = useQuery({ queryKey: ['schedule', sport], queryFn: () => getSchedule(sport) })
+  const qLines = useQuery({ queryKey: ['lines', sport], queryFn: () => sport === 'csgo' ? csgoApi.getLines() : getLines(sport) })
+  const qProjections = useQuery({ queryKey: ['projections', sport], queryFn: () => sport === 'csgo' ? Promise.resolve([]) : getProjections(sport) })
+  const qTrends = useQuery({ queryKey: ['trends', sport], queryFn: () => sport === 'csgo' ? csgoApi.getTrends() : getTrends(sport) })
+  const qInjuries = useQuery({ queryKey: ['injuries', sport], queryFn: () => sport === 'csgo' ? Promise.resolve([]) : getInjuries(sport) })
+  const qSchedule = useQuery({ queryKey: ['schedule', sport], queryFn: () => sport === 'csgo' ? csgoApi.getSchedule() : getSchedule(sport) })
 
   React.useEffect(() => {
 
   }, [qLines.status, qProjections.status, qTrends.status, qInjuries.status, qSchedule.status])
 
   // Build rows (works even while some queries are still loading)
-  const rows = buildRows(stat, {
-    lines: qLines.data ?? [],
-    projections: qProjections.data ?? [],
-    trends: qTrends.data ?? [],
-    injuries: qInjuries.data ?? [],
-    alt: [],
-    schedule: qSchedule.data ?? [],
-  })
+  const rows = sport === 'csgo'
+    ? buildRowsCsgo(qLines.data ?? [], qTrends.data ?? [], qSchedule.data ?? [], csgoProp)
+    : buildRows(stat, {
+      lines: qLines.data ?? [],
+      projections: qProjections.data ?? [],
+      trends: qTrends.data ?? [],
+      injuries: qInjuries.data ?? [],
+      alt: [],
+      schedule: qSchedule.data ?? [],
+    })
 
   // ---------- Sport-specific normalization ----------
   const cfg = getSportConfig(sport)
@@ -84,16 +94,17 @@ export default function App({ sport = 'wnba' }: { sport?: SportId }) {
   }, [rowsEnsuredOpp])
 
   // When querying DVP, remap 'GSV'  'LVA'
+  // Only fetch DVP for sports that support it (currently wnba)
   const dvpQueries = useQueries({
-    queries: teamsNeeded.map(team => {
+    queries: sport === 'wnba' ? teamsNeeded.map(team => {
       const queryTeam = team === 'GSV' ? 'LVA' : team
       return {
         queryKey: ['dvp', queryTeam, sport],
         queryFn: () => getDvp(queryTeam, sport),
         staleTime: 60 * 60 * 1000,
-        enabled: teamsNeeded.length > 0, // Add this to ensure queries run
+        enabled: teamsNeeded.length > 0,
       }
-    }),
+    }) : [],
   })
 
   const dvpByTeam = useMemo(() => {
@@ -190,34 +201,66 @@ export default function App({ sport = 'wnba' }: { sport?: SportId }) {
         {sport === 'wnba' ? 'WNBA Betting Table' : `${sport.toUpperCase()} Betting Table`}
       </h1>
 
-      <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
-        <label htmlFor="stat" style={{ fontWeight: 500, display: 'block', marginBottom: 8 }}>
-          Props
-        </label>
-        <select
-          id="stat"
-          value={stat}
-          onChange={(e) => setStat(e.target.value as 'points' | 'rebounds' | 'assists')}
-          style={{
-            padding: '10px 14px',
-            border: '1px solid #e1e1e1',
-            borderRadius: 8,
-            background: '#fff',
-            fontSize: 16,
-            minWidth: 160,
-          }}
-        >
-          <option value="points">Points</option>
-          <option value="rebounds">Rebounds</option>
-          <option value="assists">Assists</option>
-        </select>
-      </div>
+      {sport !== 'csgo' && (
+        <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
+          <label htmlFor="stat" style={{ fontWeight: 500, display: 'block', marginBottom: 8 }}>
+            Props
+          </label>
+          <select
+            id="stat"
+            value={stat}
+            onChange={(e) => setStat(e.target.value as 'points' | 'rebounds' | 'assists')}
+            style={{
+              padding: '10px 14px',
+              border: '1px solid #e1e1e1',
+              borderRadius: 8,
+              background: '#fff',
+              fontSize: 16,
+              minWidth: 160,
+            }}
+          >
+            <option value="points">Points</option>
+            <option value="rebounds">Rebounds</option>
+            <option value="assists">Assists</option>
+          </select>
+        </div>
+      )}
+
+      {sport === 'csgo' && (
+        <div style={{ display: 'inline-block', textAlign: 'left', marginBottom: 20 }}>
+          <label htmlFor="csgo-prop" style={{ fontWeight: 500, display: 'block', marginBottom: 8 }}>
+            Prop Type
+          </label>
+          <select
+            id="csgo-prop"
+            value={csgoProp}
+            onChange={(e) => setCsgoProp(e.target.value as any)}
+            style={{
+              padding: '10px 14px',
+              border: '1px solid #e1e1e1',
+              borderRadius: 8,
+              background: '#fff',
+              fontSize: 16,
+              minWidth: 260,
+            }}
+          >
+            <option value="map12Kills">Map 1-2 Kills</option>
+            <option value="map3Kills">Map 3 Kills</option>
+            <option value="map12Headshots">Map 1-2 Headshots</option>
+            <option value="map3Headshots">Map 3 Headshots</option>
+            <option value="map1Kills">Map 1 Kills</option>
+            <option value="map1Headshots">Map 1 Headshots</option>
+          </select>
+        </div>
+      )}
 
       {/* If your Table component needs a strict type, keep `opponent` as string above.
           Casting to any avoids friction if TableRow's exact type differs. */}
       {/* sport-specific table rendering */}
       {sport === 'wnba' ? (
         <TableWnba rows={filteredRows as any} />
+      ) : sport === 'csgo' ? (
+        <TableCsgo rows={filteredRows as any} />
       ) : (
         <div style={{ padding: 40 }}>
           <h2>{sport.toUpperCase()} table not implemented yet</h2>

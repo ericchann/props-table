@@ -14,7 +14,7 @@ const L = z.object({
   projection: z.record(z.string(), z.any()).optional()
 })
 export async function getLines(): Promise<LinesRow[]> {
-  const { data } = await api.get('/lines')
+  const { data } = await api.get('/wnba/lines')
   try {
     const parsed = z.array(L).parse(data)
 

@@ -8,7 +8,7 @@ const S = z.object({
 })
 export async function getSchedule(): Promise<ScheduleGame[]> {
   try {
-    const { data } = await api.get('/schedule')
+  const { data } = await api.get('/wnba/schedule')
     const parsed = z.array(S).parse(data) // schedule shape  ✓
     return parsed
   } catch (err) {

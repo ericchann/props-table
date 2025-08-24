@@ -1,0 +1,2109 @@
+[
+  {
+    "slug": "masval",
+    "name": "MaSvAl",
+    "team": "Betera Esports",
+    "home": "Betera Esports",
+    "away": "CYBERSHOKE Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 31.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 18.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Betera Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "vert",
+    "name": "Vert",
+    "team": "Betera Esports",
+    "home": "Betera Esports",
+    "away": "CYBERSHOKE Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 25.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 12.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Betera Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "h1te",
+    "name": "H1te",
+    "team": "Betera Esports",
+    "home": "Betera Esports",
+    "away": "CYBERSHOKE Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 31.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 10.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Betera Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "tenzy",
+    "name": "tENZY",
+    "team": "Betera Esports",
+    "home": "Betera Esports",
+    "away": "CYBERSHOKE Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 30.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 19.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Betera Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "synyx",
+    "name": "SynyX",
+    "team": "Betera Esports",
+    "home": "Betera Esports",
+    "away": "CYBERSHOKE Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 16.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Betera Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "dssj",
+    "name": "DSSj",
+    "team": "ARCRED",
+    "home": "ARCRED",
+    "away": "SPARTA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 28.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 10.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "ARCRED",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "get_jeka",
+    "name": "Get_Jeka",
+    "team": "ARCRED",
+    "home": "ARCRED",
+    "away": "SPARTA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 26.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 14.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "ARCRED",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "ryujin-05d9fbb0-2aa6-4e36-ae6f-cb98f04dea44",
+    "name": "Ryujin",
+    "team": "ARCRED",
+    "home": "ARCRED",
+    "away": "SPARTA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 30.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "ARCRED",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "raijin",
+    "name": "Raijin",
+    "team": "ARCRED",
+    "home": "ARCRED",
+    "away": "SPARTA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 30.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 18.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "ARCRED",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "redzed",
+    "name": "redzed",
+    "team": "ARCRED",
+    "home": "ARCRED",
+    "away": "SPARTA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 26.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 16.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "ARCRED",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "djon8",
+    "name": "Djon8",
+    "team": "SPARTA",
+    "home": "SPARTA",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 31.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 19.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "SPARTA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "yuramyata",
+    "name": "yuramyata",
+    "team": "SPARTA",
+    "home": "SPARTA",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 32.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 11.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "SPARTA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "solb",
+    "name": "SoLb",
+    "team": "SPARTA",
+    "home": "SPARTA",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 24.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 13.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "SPARTA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "k4nfuz",
+    "name": "k4nfuz",
+    "team": "SPARTA",
+    "home": "SPARTA",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 27.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 16.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "SPARTA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "sdaim",
+    "name": "Sdaim",
+    "team": "GUN5 Esports",
+    "home": "GUN5 Esports",
+    "away": "1WIN",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 31.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "GUN5 Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "fineshine52",
+    "name": "fineshine52",
+    "team": "GUN5 Esports",
+    "home": "GUN5 Esports",
+    "away": "1WIN",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 30.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 12.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "GUN5 Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "tex1y",
+    "name": "tex1y",
+    "team": "GUN5 Esports",
+    "home": "GUN5 Esports",
+    "away": "1WIN",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 16.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "GUN5 Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "sellter",
+    "name": "SELLTER",
+    "team": "GUN5 Esports",
+    "home": "GUN5 Esports",
+    "away": "1WIN",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "GUN5 Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "lack1",
+    "name": "Lack1",
+    "team": "GUN5 Esports",
+    "home": "GUN5 Esports",
+    "away": "1WIN",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 26.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 13.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "GUN5 Esports",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "cronuss",
+    "name": "cronuss",
+    "team": "1WIN",
+    "home": "1WIN",
+    "away": "GUN5 Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 16.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "1WIN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "hobbit",
+    "name": "HObbit",
+    "team": "1WIN",
+    "home": "1WIN",
+    "away": "GUN5 Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 15.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "1WIN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "latt1kk",
+    "name": "lattykk",
+    "team": "1WIN",
+    "home": "1WIN",
+    "away": "GUN5 Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 10.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "1WIN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "oz1k",
+    "name": "Oz1k",
+    "team": "1WIN",
+    "home": "1WIN",
+    "away": "GUN5 Esports",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 28.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "1WIN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "kind0",
+    "name": "Kind0",
+    "team": "PARTIZAN",
+    "home": "PARTIZAN",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 27.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 12.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "PARTIZAN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "dragon",
+    "name": "Dragon",
+    "team": "PARTIZAN",
+    "home": "PARTIZAN",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 32.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "PARTIZAN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "vldn",
+    "name": "VLDN",
+    "team": "PARTIZAN",
+    "home": "PARTIZAN",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 27.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 15.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "PARTIZAN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "c0llins",
+    "name": "c0llins",
+    "team": "PARTIZAN",
+    "home": "PARTIZAN",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 27.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 14.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "PARTIZAN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "depreshn",
+    "name": "DEPRESHN",
+    "team": "PARTIZAN",
+    "home": "PARTIZAN",
+    "away": "ARCRED",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 27.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 10.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "PARTIZAN",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "kyousuke",
+    "name": "Kyousuke",
+    "team": "Team Falcons",
+    "home": "Team Falcons",
+    "away": "AURORA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 35.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 19.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Team Falcons",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "m0nesy",
+    "name": "m0NESY",
+    "team": "Team Falcons",
+    "home": "Team Falcons",
+    "away": "AURORA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 32.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 13.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Team Falcons",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "niko-209b1dcb-4197-404e-b6e1-3c44d6882aef",
+    "name": "NiKo",
+    "team": "Team Falcons",
+    "home": "Team Falcons",
+    "away": "AURORA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 16.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Team Falcons",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "teses-01f668f2-6c58-4a18-9d16-ab673fe18c76",
+    "name": "TeSeS",
+    "team": "Team Falcons",
+    "home": "Team Falcons",
+    "away": "AURORA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 25.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 15.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Team Falcons",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "kyxsan",
+    "name": "kyxsan",
+    "team": "Team Falcons",
+    "home": "Team Falcons",
+    "away": "AURORA",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 25.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 12.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Team Falcons",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "wicadia",
+    "name": "Wicadia",
+    "team": "AURORA",
+    "home": "AURORA",
+    "away": "Team Falcons",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 15.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "AURORA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "xantares-60b1ffa7-0791-4ac0-871d-44036422d2c2",
+    "name": "XANTARES",
+    "team": "AURORA",
+    "home": "AURORA",
+    "away": "Team Falcons",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 29.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 15.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "AURORA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "woxic",
+    "name": "woxic",
+    "team": "AURORA",
+    "home": "AURORA",
+    "away": "Team Falcons",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 28.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 10.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "AURORA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "jotta",
+    "name": "jottAAA",
+    "team": "AURORA",
+    "home": "AURORA",
+    "away": "Team Falcons",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 26.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 14.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "AURORA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "maj3r",
+    "name": "MAJ3R",
+    "team": "AURORA",
+    "home": "AURORA",
+    "away": "Team Falcons",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 20.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 10.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "AURORA",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "dea",
+    "name": "dea",
+    "team": "Getting Info",
+    "home": "Getting Info",
+    "away": "Getting Info",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 31.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 12.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Getting Info",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "marke",
+    "name": "MarKE",
+    "team": "Getting Info",
+    "home": "Getting Info",
+    "away": "Getting Info",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 30.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Getting Info",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "snav",
+    "name": "snav",
+    "team": "Getting Info",
+    "home": "Getting Info",
+    "away": "Getting Info",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 28.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 12.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Getting Info",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "shane",
+    "name": "shane",
+    "team": "Getting Info",
+    "home": "Getting Info",
+    "away": "Getting Info",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 28.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 17.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Getting Info",
+      "position": "G"
+    }
+  },
+  {
+    "slug": "slump",
+    "name": "slump",
+    "team": "Getting Info",
+    "home": "Getting Info",
+    "away": "Getting Info",
+    "projection": {
+      "twoMapKills": {
+        "summary": {
+          "manualOU": 27.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "twoMapHeadshots": {
+        "summary": {
+          "manualOU": 9.5,
+          "overPrice": "-137",
+          "underPrice": "-137",
+          "altLines": {}
+        }
+      },
+      "mapThreeHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneKills": {
+        "summary": {
+          "manualOU": null
+        }
+      },
+      "mapOneHeadshots": {
+        "summary": {
+          "manualOU": null
+        }
+      }
+    },
+    "stats": {
+      "team": "Getting Info",
+      "position": "G"
+    }
+  }
+]
